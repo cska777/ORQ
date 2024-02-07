@@ -1,0 +1,62 @@
+<!-- <ul>
+    @for (serie of series; track serie.titre){
+        <li> {{ serie.titre}} <br>
+            {{ serie.duree_moyenne_episode }} minutes <br>
+            {{ serie.genres }}
+        </li>
+    }
+</ul> -->
+
+
+<ng-container *ngFor="let genre of genresUnique">
+    <button class="btn btn-primary m-2" (click)="choisirGenre(genre)"
+        [ngClass]="{'selected' : choix_genre.includes(genre), 'unselected' : !choix_genre.includes(genre)}">{{genre}}</button>
+</ng-container>
+
+<div class="dateSortie">
+    <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 0, fin: 1970 })" [ngClass]="{
+        'selected': isTrancheSelected({ debut: 0, fin: 1970 }), 
+        'unselected': !isTrancheSelected({ debut: 0, fin: 1970 })
+    }">
+        Avant 1970
+    </button>
+
+    <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1971, fin: 1990 })" [ngClass]="{
+        'selected': isTrancheSelected({ debut: 1971, fin: 1990 }), 
+        'unselected': !isTrancheSelected({ debut: 1971, fin: 1990 })
+    }">
+        1971-1990
+    </button>
+
+    <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1991, fin: 2010 })" [ngClass]="{
+        'selected': isTrancheSelected({ debut: 1991, fin: 2010 }), 
+        'unselected': !isTrancheSelected({ debut: 1991, fin: 2010 })
+    }">
+        1991-2010
+    </button>
+
+    <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 2011, fin: 2025 })" [ngClass]="{
+        'selected': isTrancheSelected({ debut: 2011, fin: 2025 }), 
+        'unselected': !isTrancheSelected({ debut: 2011, fin: 2025 })
+}">
+        Après 2010
+    </button>
+
+</div>
+
+<div class="press_score">
+    <button class="btn btn-warning m-2" (click)="choisirScore(1)"
+        [ngClass]="{'selected' : choix_score.includes(1), 'unselected' : !choix_score.includes(1)}">*</button>
+    <button class="btn btn-warning m-2" (click)="choisirScore(2)"
+        [ngClass]="{'selected' : choix_score.includes(2), 'unselected' : !choix_score.includes(2)}">**</button>
+    <button class="btn btn-warning m-2" (click)="choisirScore(3)"
+        [ngClass]="{'selected' : choix_score.includes(3), 'unselected' : !choix_score.includes(3)}">***</button>
+    <button class="btn btn-warning m-2" (click)="choisirScore(4)"
+        [ngClass]="{'selected' : choix_score.includes(4), 'unselected' : !choix_score.includes(4)}">****</button>
+    <button class="btn btn-warning m-2" (click)="choisirScore(5)"
+        [ngClass]="{'selected' : choix_score.includes(5), 'unselected' : !choix_score.includes(5)}">*****</button>
+</div>
+
+<div class="serieAleatoire">
+    <button class="btn btn-dark" (click)="selectRandomSerie()">Afficher Série</button>
+</div>
