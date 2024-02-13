@@ -1,10 +1,13 @@
 <h1>INSCRIPTION</h1>
-
+<div *ngIf="errors.length > 0">
+    <ul>
+        <li *ngFor="let error of errors">{{error}}</li>
+    </ul>
+</div>
 <form (ngSubmit)="onSubmit()">
-    <input type="text" name="username" [(ngModel)]="userData.username" placeholder="Username">
-    <input type="text" name="firstname" [(ngModel)]="userData.first_name" placeholder="Firstname">
-    <input type="text" name="lastname" [(ngModel)]="userData.last_name" placeholder="Lastname">
+    <input type="text" name="username" [(ngModel)]="userData.username" placeholder="Nom d'utilisateur">
     <input type="email" name="email" [(ngModel)]="userData.email" placeholder="Email">
-    <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Password">
+    <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Mot de passe">
+    <input type="password" name="password" [(ngModel)]="userData.passwordConfirm" placeholder="Confirmer votre mot de passe">
     <button type="submit">Inscription</button>
 </form> 
