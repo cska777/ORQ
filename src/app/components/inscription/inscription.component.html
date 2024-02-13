@@ -1,1 +1,10 @@
-<p>inscription works!</p>
+<h1>INSCRIPTION</h1>
+
+<form (ngSubmit)="onSubmit()">
+    <input type="text" name="username" [(ngModel)]="userData.username" placeholder="Username">
+    <input type="text" name="firstname" [(ngModel)]="userData.first_name" placeholder="Firstname">
+    <input type="text" name="lastname" [(ngModel)]="userData.last_name" placeholder="Lastname">
+    <input type="email" name="email" [(ngModel)]="userData.email" placeholder="Email">
+    <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Password">
+    <button type="submit">Inscription</button>
+</form> 

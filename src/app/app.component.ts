@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
+import { CrudComponent } from './components/crud/crud.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { AccueilComponent } from './components/accueil/accueil.component';
     RouterOutlet,
     NavbarComponent,
     FooterComponent,
-    AccueilComponent
+    AccueilComponent,
+    CrudComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

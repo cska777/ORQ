@@ -40,6 +40,7 @@ export class FindSeriesComponent {
 
   }
 
+  
   // Tableau pour stocker les choix et filtré
   filters: any = {
     genre: [],
@@ -263,7 +264,6 @@ export class FindSeriesComponent {
     // Logique pour sélectionner une série aléatoire
     const randomIndex = Math.floor(Math.random() * seriesFiltrees.length);
     this.selectedRandomSerie = seriesFiltrees[randomIndex];
-    console.log("Série sélectionnée aléatoirement :", this.selectedRandomSerie);
 
     return this.selectedRandomSerie;
   }

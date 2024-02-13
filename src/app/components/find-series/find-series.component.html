@@ -1,11 +1,3 @@
-<!-- <ul>
-    @for (serie of series; track serie.titre){
-        <li> {{ serie.titre}} <br>
-            {{ serie.duree_moyenne_episode }} minutes <br>
-            {{ serie.genres }}
-        </li>
-    }
-</ul> -->
 <h1>TROUVER SA SERIE </h1>
 <div id="choixGenre" *ngIf="divVisible === 'choixGenre'">
     <ng-container *ngFor="let genre of genresUnique">
