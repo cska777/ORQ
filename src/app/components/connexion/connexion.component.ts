@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     NgIf,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './connexion.component.html',
   styleUrl: './connexion.component.css'
@@ -33,8 +33,14 @@ export class ConnexionComponent {
       this.login(this.username, this.password).subscribe({
         next: (response: any) => {
           console.log('Connexion réussie', response);
-          // Rediriger vers la page d'accueil ou une autre page après la connexion réussie
-          this.router.navigate(['/']);
+          if (response && response.token && response.user) {
+            localStorage.setItem('token', response.token); // Stockage du token dans le localStorage
+            localStorage.setItem('user', JSON.stringify(response.user)); // Stockage des informations de l'utilisateur dans le localStorage
+            // Rediriger vers la page d'accueil ou une autre page après la connexion réussie
+            this.router.navigate(['/']);
+          } else {
+            console.log('Token d\'authentification ou informations utilisateur manquants dans la réponse.');
+          }
         },
         error: (error: any) => {
           console.log('Connexion échouée', error);
@@ -54,6 +60,33 @@ export class ConnexionComponent {
     });
 
     return this.http.post<any>(loginUrl, { username, password }, { headers });
+  }
+
+  getLoggedInUserInfo() {
+    // Appel à la méthode pour récupérer les informations de l'utilisateur
+    // Utilisez le token d'authentification pour appeler votre API
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+      this.http.get<any>('http://localhost:8000/test_token/', { headers }).subscribe({
+        next: (response: any) => {
+          console.log('Informations utilisateur:', response);
+          // Vous pouvez traiter les informations utilisateur ici, les afficher dans le composant, etc.
+        },
+        error: (error: any) => {
+          console.log('Erreur lors de la récupération des informations utilisateur', error);
+        }
+      });
+    } else {
+      console.log('Aucun token d\'authentification trouvé.');
+    }
+  }
+
+  ngOnInit(): void{
+    const token = localStorage.getItem("token")
+    if(token){
+      this.router.navigate(['/'])
+    }
   }
 
 }

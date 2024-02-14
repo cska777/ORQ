@@ -1,1 +1,9 @@
-<p>accueil works!</p>
+<div *ngIf="userInfo">
+    <h2>Informations sur l'utilisateur</h2>
+    <p>Nom : {{ userInfo.username }}</p>
+    <p>Email : {{ userInfo.email }}</p>
+    <!-- Affichez d'autres informations utilisateur ici -->
+  </div>
+
+  <button (click)="onLogout()">Déconnexion</button>
+  <button><a routerLink="/connexion">Connexion</a></button>
