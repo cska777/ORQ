@@ -1,4 +1,10 @@
 <h1>TROUVER SA SERIE </h1>
+<div *ngIf="userInfo">
+    <h2>Informations sur l'utilisateur</h2>
+    <p>Nom : {{ userInfo.username }}</p>
+    <p>Email : {{ userInfo.email }}</p>
+    <!-- Affichez d'autres informations utilisateur ici -->
+  </div>
 <div id="choixGenre" *ngIf="divVisible === 'choixGenre'">
     <ng-container *ngFor="let genre of genresUnique">
 
@@ -121,10 +127,14 @@
         <p>Aucune Série trouvée veuillez ajuster vos critères</p>
     </ng-template>
     <button class="btn btn-dark mx-5" (click)="selectRandomSerie()">Propose moi autre chose</button>
+    <button class="btn btn-primary" (click)="ajouterWatchList(selectedRandomSerie)">Ajouter à la watchlist</button>
 </div>
 
 <!-- !!!!!!!!! NOTE A MOI MEME N'OUBLIE PAS DE SUPPRIMER CETTE PARTIE !!!!!!!!!!!!! -->
  <button class="btn btn-secondary my-5" (click)="clear()">NETTOYER CONSOLE</button> 
 <!-- <button class="btn btn-dark my-5" (click)="selectAll()">TOUT SELECTIONNER</button>  -->
 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+
+
 

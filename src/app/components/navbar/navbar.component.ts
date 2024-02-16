@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-
+  onLogout(): void {
+    localStorage.clear()
+    window.location.reload()
+  }
 }

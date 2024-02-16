@@ -36,19 +36,26 @@ export class ConnexionComponent {
           if (response && response.token && response.user) {
             localStorage.setItem('token', response.token); // Stockage du token dans le localStorage
             localStorage.setItem('user', JSON.stringify(response.user)); // Stockage des informations de l'utilisateur dans le localStorage
+            // Vérifier si le token a été correctement stocké
+            const storedToken = localStorage.getItem('token');
+            if (storedToken) {
+              console.log('Token stocké avec succès dans le local storage:', storedToken);
+            } else {
+              console.error('Erreur lors de la récupération du token depuis le local storage.');
+            }
             // Rediriger vers la page d'accueil ou une autre page après la connexion réussie
             this.router.navigate(['/']);
           } else {
-            console.log('Token d\'authentification ou informations utilisateur manquants dans la réponse.');
+            console.log("Token d'authentification ou informations utilisateur manquants dans la réponse.");
           }
         },
         error: (error: any) => {
           console.log('Connexion échouée', error);
-          this.errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect.';
+          this.errorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
         }
       });
     } else {
-      this.errorMessage = 'Veuillez remplir tous les champs.';
+      this.errorMessage = "Veuillez remplir tous les champs.";
     }
   }
 
@@ -78,7 +85,7 @@ export class ConnexionComponent {
         }
       });
     } else {
-      console.log('Aucun token d\'authentification trouvé.');
+      console.log("Aucun token d'authentification trouvé.");
     }
   }
 
@@ -88,5 +95,4 @@ export class ConnexionComponent {
       this.router.navigate(['/'])
     }
   }
-
 }

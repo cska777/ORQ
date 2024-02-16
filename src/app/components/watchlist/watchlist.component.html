@@ -1,1 +1,24 @@
-<p>watchlist works!</p>
+<h2>Ma Watchlist</h2>
+
+<div *ngIf="userInfo">
+    <h2>Informations sur l'utilisateur</h2>
+    <p>Nom : {{ userInfo.username }}</p>
+    <p>Email : {{ userInfo.email }}</p>
+    <!-- Affichez d'autres informations utilisateur ici -->
+  </div>
+<div *ngIf="watchlist.length === 0">
+  <p>Aucune série dans la watchlist.</p>
+</div>
+<ul *ngIf="watchlist.length > 0">
+  <li *ngFor="let oeuvre of watchlist">
+    <h4>{{ oeuvre.titre }} </h4>
+    id : {{ oeuvre.id }}<br>
+    vu : {{ oeuvre.vu }} <br>
+    À voir : {{ oeuvre.a_regarder_plus_tard}} <br>
+    En cours : {{ oeuvre.en_cours }} <br>
+    Mon avis : {{ oeuvre.mon_avis }} <br>
+
+    <button (click)="removeFromWatchlist(oeuvre.id)">Retirer de la watchlist</button>
+  </li>
+</ul>
+

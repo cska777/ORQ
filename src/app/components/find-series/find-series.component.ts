@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import jsonData from '../../data/allocine_top_series.json'
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 
 // Définition d'un type pour représenter la tranche de date
 type TrancheDate = {
@@ -25,22 +26,39 @@ type TrancheDuree = {
     RouterLink,
     ReactiveFormsModule,
     NgClass,
+    HttpClientModule,
   ],
   templateUrl: './find-series.component.html',
   styleUrl: './find-series.component.css'
 })
 export class FindSeriesComponent {
+  userInfo :any
 
-  infini : number = Infinity
+  ngOnInit(): void {
+    // Récupérer les informations de l'utilisateur depuis le localStorage
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      this.userInfo = JSON.parse(userString);
+      // Appel de la méthode pour ajouter l'utilisateur connecté à la watchlist
+      this.ajouterWatchList(this.userInfo.id);
+    } else {
+      console.log('Aucune information utilisateur trouvée.');
+    }
+  }
+  onLogout(): void {
+    localStorage.clear();
+    window.location.reload();
+  }
+  infini: number = Infinity
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // Appel de la méthode pour extraire les genres uniques
     this.extraireGenresUnique()
     this.selectRandomSerie()
 
   }
 
-  
+
   // Tableau pour stocker les choix et filtré
   filters: any = {
     genre: [],
@@ -281,9 +299,9 @@ export class FindSeriesComponent {
       this.divVisible = "dateSortie"
     } else if (this.divVisible === "dateSortie") {
       this.divVisible = "pressScore"
-    }else if(this.divVisible === "pressScore"){
-    this.selectRandomSerie()
-    this.divVisible = "serieAleatoire"
+    } else if (this.divVisible === "pressScore") {
+      this.selectRandomSerie()
+      this.divVisible = "serieAleatoire"
     }
   }
   // Je fais pareil pour un retour en arrière
@@ -294,12 +312,47 @@ export class FindSeriesComponent {
       this.divVisible = "dateSortie"
     } else if (this.divVisible === "dateSortie") {
       this.divVisible = "choixDureeEp"
-    }else if(this.divVisible === "choixDureeEp") {
+    } else if (this.divVisible === "choixDureeEp") {
       this.divVisible = "choixGenre"
     }
   }
 
 
+// Ajouter série à la watchlist
+ajouterWatchList(selectedSerie: any): void {
+    if (!this.userInfo) {
+        console.error("Informations utilisateur non disponibles.");
+        return;
+    }
 
+    // Définir l'url de l'api de Django pour la Watchlist
+    const apiUrl = 'http://localhost:8000/watchlist/';
+
+    // Définir les données à envoyer
+    const data = {
+        user_id: this.userInfo.id,
+        titre: selectedSerie.titre, // Assurez-vous que la propriété titre est correcte
+        vu: false,
+        a_regarder_plus_tard: true,
+    };
+
+    // Définir l'en-tête de la requête
+    const httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + localStorage.getItem('token')
+        })
+    };
+
+    // Envoyer la requête POST à l'API Django
+    this.http.post(apiUrl, data, httpOptions).subscribe({
+        next: (response: any) => {
+            console.log("Série ajoutée avec succès à la watchlist", response);
+        },
+        error: (error: any) => {
+            console.error("Erreur lors de l'ajout", error);
+        }
+    });
+}
 
 }

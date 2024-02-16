@@ -45,4 +45,11 @@ export class InscriptionComponent {
       this.errors.push("Veuillez remplir tous les champs obligatoires");
     }
   }
+  ngOnInit(): void{
+    const token = localStorage.getItem("token")
+    if(token){
+      this.router.navigate(['/'])
+    }
+  }
+  
 }

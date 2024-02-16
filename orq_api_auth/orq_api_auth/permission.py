@@ -6,3 +6,9 @@ class CreateUserPermission(permissions.BasePermission):
         if request.method == 'POST':
             return True
         return False
+    
+class WatchListPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
+        return False 

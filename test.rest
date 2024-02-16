@@ -8,12 +8,29 @@ Content-Type: application/json
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
-{"username" : "chris1", "password" : "Pass1234!"}
+{"username" : "Arya", "password" : "Pass1234!"}
 
 ####
 
 GET http://127.0.0.1:8000/test_token
 Content-Type: application/json
-Authorization: Token 0c32f00aa60ec25295edb55a6ea4e9e50ef66d3b
+Authorization: Token 8fb05c2686f0f9f1c71a462b446ed8da4f669aba
 
 {}
+
+###
+
+POST http://127.0.0.1:8000/watchlist
+Content-Type: application/json
+Authorization: Token 9d5badd058c4c2b8acc629eca2e652ad4c6cc0ac
+
+{"film": "Film moiiiiii"}
+### 
+GET http://127.0.0.1:8000/watchlist
+Content-Type: application/json
+Authorization: Token 8fb05c2686f0f9f1c71a462b446ed8da4f669aba
+
+###
+DELETE  http://127.0.0.1:8000/watchlist
+Content-Type: application/json
+Authorization: Token 8fb05c2686f0f9f1c71a462b446ed8da4f669aba
