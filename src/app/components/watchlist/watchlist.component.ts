@@ -32,6 +32,7 @@ watchlist: any[] = [];
     } else {
       this.getLoggedInUserInfo();
       this.getWatchlist();
+      console.log("token : ", this.token)
     }
   }
 
@@ -79,6 +80,7 @@ watchlist: any[] = [];
 
   removeFromWatchlist(seriesId: number): void {
     if (this.token) {
+      console.log("serie id : ", seriesId)
       this.watchlistService.removeFromWatchlist(seriesId, this.token).subscribe({
         next: (response: any) => {
           console.log('Série retirée de la watchlist:', response);

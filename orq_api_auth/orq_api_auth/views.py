@@ -82,3 +82,15 @@ def watchlist(request):
         return Response(serializer.data)
     else:
         return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+@api_view(['DELETE'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def watchlist_delete(request, series_id):
+    user_id = request.user.id
+
+    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id, id=series_id)
+    
+    watchlist_entry.delete()
+    
+    return Response("Titre supprimé de la watchlist avec succès", status=status.HTTP_204_NO_CONTENT)

@@ -1,10 +1,12 @@
 from django.contrib import admin
-from django.urls import re_path
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    re_path('login', views.login),
-    re_path('signup', views.signup),
-    re_path('test_token', views.test_token),
-    re_path('watchlist', views.watchlist),
+    path('login/', views.login, name='login'),
+    path('signup/', views.signup, name='signup'),
+    path('test_token/', views.test_token, name='test_token'),
+    path('watchlist/', views.watchlist, name='watchlist'),
+    path('watchlist/<int:series_id>/', views.watchlist_delete, name='watchlist_delete'),
+    
 ]
