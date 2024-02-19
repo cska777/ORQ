@@ -60,7 +60,7 @@ export class ConnexionComponent {
   }
 
   login(username: string, password: string): Observable<any> {
-    const loginUrl = 'http://localhost:8000/api-user-login/';
+    const loginUrl = 'http://localhost:8000/login/';
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

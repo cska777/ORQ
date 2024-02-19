@@ -69,7 +69,6 @@ def watchlist(request):
             user_id=user_id,
             titre=titre,
             vu=False,
-            a_regarder_plus_tard=True,
             aime=False,
             en_cours=False
         )
@@ -83,14 +82,39 @@ def watchlist(request):
     else:
         return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
-@api_view(['DELETE'])
+@api_view(['DELETE','OPTIONS'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def watchlist_delete(request, series_id):
+def watchlist_delete(request, oeuvre_id):
     user_id = request.user.id
 
-    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id, id=series_id)
+    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id, id=oeuvre_id)
     
     watchlist_entry.delete()
     
     return Response("Titre supprimé de la watchlist avec succès", status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def watchlist_update(request,oeuvre_id):
+    user_id = request.user.id
+
+    # Récupérer l'entrée de la watchlist
+    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id,id = oeuvre_id)
+
+    # Mettre à jour les champs si les données sont fournies dans la reqûete
+    if 'vu' in request.data:
+        watchlist_entry.vu = request.data['vu']
+    if 'mon_avis' in request.data: 
+        watchlist_entry.mon_avis = request.data['mon_avis']
+    if 'aime' in request.data :
+        watchlist_entry.aime = request.data['aime']
+    if 'en_cours' in request.data :
+        watchlist_entry.en_cours = request.data['en_cours']
+    
+    # Enregistrer les modifications
+    watchlist_entry.save()
+
+    return Response("Entrée de la watchlist mise à jour avec succès", status=status.HTTP_200_OK)
+

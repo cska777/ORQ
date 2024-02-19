@@ -11,13 +11,13 @@
 </div>
 <ul *ngIf="watchlist.length > 0">
   <li *ngFor="let oeuvre of watchlist">
-    <h4>{{ oeuvre.titre }} </h4>
+    <h4>{{ oeuvre.titre }}</h4>
     id : {{ oeuvre.id }}<br>
-    vu : {{ oeuvre.vu }} <br>
-    À voir : {{ oeuvre.a_regarder_plus_tard}} <br>
-    En cours : {{ oeuvre.en_cours }} <br>
-    Mon avis : {{ oeuvre.mon_avis }} <br>
-
+    vu :
+    <input type="checkbox" [(ngModel)]="oeuvre.vu" (change)="updateWatchlist(oeuvre.id, { vu: oeuvre.vu })"><br>
+    En cours :
+    <input type="checkbox" [(ngModel)]="oeuvre.en_cours" (change)="updateWatchlist(oeuvre.id, { en_cours: oeuvre.en_cours })"><br>
+    <textarea [(ngModel)]="oeuvre.mon_avis" (input)="updateWatchlist(oeuvre.id, { mon_avis: oeuvre.mon_avis })" placeholder="Mon avis"></textarea><br>
     <button (click)="removeFromWatchlist(oeuvre.id)">Retirer de la watchlist</button>
   </li>
 </ul>

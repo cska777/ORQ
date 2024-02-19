@@ -20,8 +20,14 @@ export class WatchlistService {
     return this.http.post<any>(this.apiUrl, selectedSerie, { headers });
   }
 
-  removeFromWatchlist(seriesId: number, token: string): Observable<any> {
-    const url = `${this.apiUrl}${seriesId}/`;
+  updateWatchlist(oeuvreId: number,updated:any, token: string): Observable<any>{
+    const url = `${this.apiUrl}${oeuvreId}/`
+    const headers = new HttpHeaders().set('Authorization', `Token ${token}`)
+    return this.http.put<any>(url,updated,{headers})
+  }
+
+  removeFromWatchlist(oeuvreId: number, token: string): Observable<any> {
+    const url = `${this.apiUrl}${oeuvreId}/`;
     const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
     return this.http.delete<any>(url, { headers });
   }

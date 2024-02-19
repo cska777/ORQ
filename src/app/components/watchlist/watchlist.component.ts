@@ -2,6 +2,8 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { WatchlistService } from '../../watchlist.service';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { response } from 'express';
+import { FormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn : 'root'
@@ -14,6 +16,7 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
     HttpClientModule,
     NgIf,
     NgFor,
+    FormsModule
   ],
   templateUrl: './watchlist.component.html',
   styleUrl: './watchlist.component.css'
@@ -22,6 +25,7 @@ export class WatchlistComponent implements OnInit{
 watchlist: any[] = [];
   userInfo: any;
   token: string | null = null;
+watchlistEntry: any;
 
   constructor(private watchlistService: WatchlistService, private http: HttpClient) { }
 
@@ -78,10 +82,24 @@ watchlist: any[] = [];
     }
   }
 
-  removeFromWatchlist(seriesId: number): void {
+  updateWatchlist(oeuvreId:number, updated:any): void{
+    if(this.token){
+      this.watchlistService.updateWatchlist(oeuvreId, updated, this.token).subscribe({
+        next : (response: any) => {
+          console.log('Entrée de la watchlist mise à jour avec Succès : ', response)
+          this.getWatchlist()
+        },
+        error : (error : any) => {
+          console.error('Erreur lors de la mise à jour de l\'entrée de la watchlist:', error);
+        }
+      })
+    }
+  }
+
+  removeFromWatchlist(oeuvreId: number): void {
     if (this.token) {
-      console.log("serie id : ", seriesId)
-      this.watchlistService.removeFromWatchlist(seriesId, this.token).subscribe({
+      console.log("serie id : ", oeuvreId)
+      this.watchlistService.removeFromWatchlist(oeuvreId, this.token).subscribe({
         next: (response: any) => {
           console.log('Série retirée de la watchlist:', response);
           this.getWatchlist();

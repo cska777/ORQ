@@ -8,7 +8,6 @@ class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     titre = models.CharField(max_length=255)
     vu = models.BooleanField(default=False)
-    a_regarder_plus_tard = models.BooleanField(default=True)
     mon_avis = models.TextField(max_length = 300, null=True)
     aime = models.BooleanField(default=False)
     en_cours = models.BooleanField(default=False)
