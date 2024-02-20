@@ -7,6 +7,7 @@ from django.dispatch import receiver
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     titre = models.CharField(max_length=255)
+    illustration = models.CharField(max_length = 255, null = True)
     vu = models.BooleanField(default=False)
     mon_avis = models.TextField(max_length = 300, null=True)
     aime = models.BooleanField(default=False)

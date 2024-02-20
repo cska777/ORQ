@@ -1,9 +1,11 @@
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import jsonData from '../../data/allocine_top_series.json'
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+
+
 
 // Définition d'un type pour représenter la tranche de date
 type TrancheDate = {
@@ -32,7 +34,7 @@ type TrancheDuree = {
   styleUrl: './find-series.component.css'
 })
 export class FindSeriesComponent {
-  userInfo :any
+  userInfo: any
 
   ngOnInit(): void {
     // Récupérer les informations de l'utilisateur depuis le localStorage
@@ -48,6 +50,7 @@ export class FindSeriesComponent {
   onLogout(): void {
     localStorage.clear();
     window.location.reload();
+    this.detailsVisible = new Array(this.historique.length).fill(false)
   }
   infini: number = Infinity
 
@@ -88,6 +91,9 @@ export class FindSeriesComponent {
 
   // Tableua pour les séries filtrée
   seriesFiltrees: any[] = []
+
+  // Tableau pour l'historique des séries proposée
+  historique: any[] = []
 
   // !!!!!!!!!!!!!!!!!  NOTE POUR MOI MEME NE PAS OUBLIER DE L'ENLEVER !!!!!!!!!!!!!!!!
   selectAll(): void {
@@ -283,6 +289,7 @@ export class FindSeriesComponent {
     const randomIndex = Math.floor(Math.random() * seriesFiltrees.length);
     this.selectedRandomSerie = seriesFiltrees[randomIndex];
 
+    this.historique.push(this.selectedRandomSerie)
     return this.selectedRandomSerie;
   }
 
@@ -318,11 +325,11 @@ export class FindSeriesComponent {
   }
 
 
-// Ajouter série à la watchlist
-ajouterWatchList(selectedSerie: any): void {
+  // Ajouter série à la watchlist
+  ajouterWatchList(selectedSerie: any): void {
     if (!this.userInfo) {
-        console.error("Informations utilisateur non disponibles.");
-        return;
+      console.error("Informations utilisateur non disponibles.");
+      return;
     }
 
     // Définir l'url de l'api de Django pour la Watchlist
@@ -330,29 +337,57 @@ ajouterWatchList(selectedSerie: any): void {
 
     // Définir les données à envoyer
     const data = {
-        user_id: this.userInfo.id,
-        titre: selectedSerie.titre, // Assurez-vous que la propriété titre est correcte
-        vu: false,
-        a_regarder_plus_tard: true,
+      user_id: this.userInfo.id,
+      titre: selectedSerie.titre, // Assurez-vous que la propriété titre est correcte
+      illustration: selectedSerie.illustration_url,
+      vu: false,
+      a_regarder_plus_tard: true,
     };
 
     // Définir l'en-tête de la requête
     const httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Token ' + localStorage.getItem('token')
-        })
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('token')
+      })
     };
 
     // Envoyer la requête POST à l'API Django
     this.http.post(apiUrl, data, httpOptions).subscribe({
-        next: (response: any) => {
-            console.log("Série ajoutée avec succès à la watchlist", response);
-        },
-        error: (error: any) => {
-            console.error("Erreur lors de l'ajout", error);
-        }
+      next: (response: any) => {
+        console.log("Série ajoutée avec succès à la watchlist", response);
+      },
+      error: (error: any) => {
+        console.error("Erreur lors de l'ajout", error);
+      }
     });
-}
+  }
+
+  // Mise en place du show Details
+  details: any[] = []
+  detailsVisible: boolean [] = []
+
+  // Afficher les détails lors du survol
+  showDetails(oeuvre: any, index: number) {
+    if (!this.detailsVisible[index]) {
+      this.detailsVisible[index] = true
+      this.details = [
+        oeuvre.titre,
+        oeuvre.illustration_url,
+        oeuvre.press_score,
+        oeuvre.date_de_sortie,
+        oeuvre.genres,
+        oeuvre.synopsis
+      ]
+    } else {
+      this.detailsVisible[index] = false
+    }
+
+  }
+
+  hideDetails(): void {
+    this.detailsVisible.fill(false); // Cela affectera tous les éléments de detailsVisible à false
+  }
+
 
 }

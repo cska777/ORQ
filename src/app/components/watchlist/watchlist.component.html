@@ -12,12 +12,20 @@
 <ul *ngIf="watchlist.length > 0">
   <li *ngFor="let oeuvre of watchlist">
     <h4>{{ oeuvre.titre }}</h4>
+    <ng-container *ngIf="oeuvre.illustration_url !== null; else pasIllu" >
+      <img src="{{oeuvre.illustration}}" alt="illustration" id="illuSerie"><br>
+    </ng-container>
+    <ng-template #pasIllu>
+      <img src="assets/image/ORQ.png" alt="noIllu"><br>
+    </ng-template>
     id : {{ oeuvre.id }}<br>
     vu :
-    <input type="checkbox" [(ngModel)]="oeuvre.vu" (change)="updateWatchlist(oeuvre.id, { vu: oeuvre.vu })"><br>
+<i class="fa-regular fa-eye" [ngClass]="{ 'checked': oeuvre.vu }" (click)="updateWatchlist(oeuvre.id, { vu: !oeuvre.vu })"></i>
+<br>
     En cours :
     <input type="checkbox" [(ngModel)]="oeuvre.en_cours" (change)="updateWatchlist(oeuvre.id, { en_cours: oeuvre.en_cours })"><br>
-    <textarea [(ngModel)]="oeuvre.mon_avis" (input)="updateWatchlist(oeuvre.id, { mon_avis: oeuvre.mon_avis })" placeholder="Mon avis"></textarea><br>
+   <textarea [(ngModel)]="oeuvre.mon_avis" (input)="updateTempMonAvis($event)" placeholder="Mon avis"></textarea>
+   <button (click)="sendMonAvis(oeuvre.id)">Mettre à jour</button>
     <button (click)="removeFromWatchlist(oeuvre.id)">Retirer de la watchlist</button>
   </li>
 </ul>

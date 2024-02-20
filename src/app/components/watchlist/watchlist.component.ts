@@ -1,9 +1,10 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { WatchlistService } from '../../watchlist.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { response } from 'express';
 import { FormsModule } from '@angular/forms';
+import { error } from 'console';
 
 @Injectable({
   providedIn : 'root'
@@ -16,16 +17,21 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     NgIf,
     NgFor,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './watchlist.component.html',
   styleUrl: './watchlist.component.css'
 })
 export class WatchlistComponent implements OnInit{
 watchlist: any[] = [];
-  userInfo: any;
-  token: string | null = null;
+userInfo: any;
+token: string | null = null;
 watchlistEntry: any;
+
+// Propriété pour stocker temporairement les informations du textarea
+
+monAvisTemp : string = ""
 
   constructor(private watchlistService: WatchlistService, private http: HttpClient) { }
 
@@ -108,6 +114,29 @@ watchlistEntry: any;
           console.error('Erreur lors de la suppression:', error);
         }
       });
+    }
+  }
+
+  // Méthode pour mettre à jour temporairement les informations du textarea
+  updateTempMonAvis(event: any){
+    if(event &&  event.target && event.target.value){
+      this.monAvisTemp = event.target.value
+    }
+
+  }
+
+  // Méthode pour envoyer les informations du textarea au serveur
+  sendMonAvis(oeuvreId : number){
+    if(this.token){
+      this.watchlistService.updateWatchlist(oeuvreId,{mon_avis:this.monAvisTemp}, this.token).subscribe({
+        next:(response:any) => {
+          console.log("Série retirée de la watchlist :", response)
+          this.getWatchlist()
+        },
+        error: (error : any) => {
+          console.error("Erreur lors de l'envoi de mon avis",error)
+        }
+      })
     }
   }
 }

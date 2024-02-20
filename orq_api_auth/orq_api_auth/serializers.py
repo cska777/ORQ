@@ -10,4 +10,4 @@ class UserSerializer(serializers.ModelSerializer):
 class WatchlistSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Watchlist
-        fields = ['id', 'titre', 'vu','user_id','mon_avis','aime','en_cours']
+        fields = '__all__'

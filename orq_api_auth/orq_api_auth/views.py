@@ -54,6 +54,7 @@ def watchlist(request):
         # Extraire les données de la requête
         user_id = request.user.id
         titre = request.data.get('titre')
+        illustration = request.data.get('illustration')
 
         # Vérifier si les données requises sont présentes
         if not titre:
@@ -70,7 +71,8 @@ def watchlist(request):
             titre=titre,
             vu=False,
             aime=False,
-            en_cours=False
+            en_cours=False,
+            illustration = illustration
         )
         return Response("Série ajoutée avec succès à la watchlist", status=status.HTTP_201_CREATED)
     elif request.method == 'GET':
@@ -82,39 +84,37 @@ def watchlist(request):
     else:
         return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
-@api_view(['DELETE','OPTIONS'])
+@api_view(['DELETE','PUT'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def watchlist_delete(request, oeuvre_id):
-    user_id = request.user.id
+def watchlist_update(request, oeuvre_id):
+        if request.method == 'DELETE' :
+            user_id = request.user.id
 
-    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id, id=oeuvre_id)
-    
-    watchlist_entry.delete()
-    
-    return Response("Titre supprimé de la watchlist avec succès", status=status.HTTP_204_NO_CONTENT)
+            watchlist_entry = get_object_or_404(Watchlist, user_id=user_id, id=oeuvre_id)
+            
+            watchlist_entry.delete()
+            
+            return Response("Titre supprimé de la watchlist avec succès", status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'PUT' :
+            user_id = request.user.id
+            
+            # Récupérer l'entrée de la watchlist
+            watchlist_entry = get_object_or_404(Watchlist, user_id = user_id, id= oeuvre_id)
 
-@api_view(['PUT'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def watchlist_update(request,oeuvre_id):
-    user_id = request.user.id
-
-    # Récupérer l'entrée de la watchlist
-    watchlist_entry = get_object_or_404(Watchlist, user_id=user_id,id = oeuvre_id)
-
-    # Mettre à jour les champs si les données sont fournies dans la reqûete
-    if 'vu' in request.data:
-        watchlist_entry.vu = request.data['vu']
-    if 'mon_avis' in request.data: 
-        watchlist_entry.mon_avis = request.data['mon_avis']
-    if 'aime' in request.data :
-        watchlist_entry.aime = request.data['aime']
-    if 'en_cours' in request.data :
-        watchlist_entry.en_cours = request.data['en_cours']
-    
-    # Enregistrer les modifications
-    watchlist_entry.save()
-
-    return Response("Entrée de la watchlist mise à jour avec succès", status=status.HTTP_200_OK)
+            # Mettre à jour les champs si les données sont fournies dans la requête
+            if 'vu' in request.data : 
+                watchlist_entry.vu = request.data['vu']
+            if 'mon_avis' in request.data : 
+                watchlist_entry.mon_avis = request.data['mon_avis']
+            if 'aime' in request.data :
+                watchlist_entry.aime = request.data['aime']
+            if 'en_cours' in request.data :
+                watchlist_entry.en_cours = request.data['en_cours']
+            
+            # Enregistrer les modifications
+            watchlist_entry.save()
+            return Response("Entrée de la watchlist mise à jour avec succès", status=status.HTTP_200_OK)
+        else : 
+            return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
