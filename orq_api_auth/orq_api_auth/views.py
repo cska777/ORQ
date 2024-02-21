@@ -55,6 +55,8 @@ def watchlist(request):
         user_id = request.user.id
         titre = request.data.get('titre')
         illustration = request.data.get('illustration')
+        vu = request.data.get('vu')  # Extraire la valeur de 'vu' depuis la requête
+
 
         # Vérifier si les données requises sont présentes
         if not titre:
@@ -69,7 +71,7 @@ def watchlist(request):
         watchlist_entry = Watchlist.objects.create(
             user_id=user_id,
             titre=titre,
-            vu=False,
+            vu=vu,
             aime=False,
             en_cours=False,
             illustration = illustration
@@ -103,7 +105,7 @@ def watchlist_update(request, oeuvre_id):
             watchlist_entry = get_object_or_404(Watchlist, user_id = user_id, id= oeuvre_id)
 
             # Mettre à jour les champs si les données sont fournies dans la requête
-            if 'vu' in request.data : 
+            if 'vu' in request.data :
                 watchlist_entry.vu = request.data['vu']
             if 'mon_avis' in request.data : 
                 watchlist_entry.mon_avis = request.data['mon_avis']

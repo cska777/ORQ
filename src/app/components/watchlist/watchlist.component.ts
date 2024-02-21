@@ -122,7 +122,6 @@ monAvisTemp : string = ""
     if(event &&  event.target && event.target.value){
       this.monAvisTemp = event.target.value
     }
-
   }
 
   // Méthode pour envoyer les informations du textarea au serveur

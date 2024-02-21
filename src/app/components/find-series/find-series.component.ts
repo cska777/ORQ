@@ -4,8 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import jsonData from '../../data/allocine_top_series.json'
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-
-
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Définition d'un type pour représenter la tranche de date
 type TrancheDate = {
@@ -29,20 +28,41 @@ type TrancheDuree = {
     ReactiveFormsModule,
     NgClass,
     HttpClientModule,
+    MatSnackBarModule
   ],
   templateUrl: './find-series.component.html',
   styleUrl: './find-series.component.css'
 })
 export class FindSeriesComponent {
   userInfo: any
+  watchlist: any[] = []
+  isButtonDisabled: boolean = false
 
+  // Initialisation de la watchlist
+  initializeWatchlist(){
+      const apiUrl = `http://localhost:8000/watchlist/`
+
+      const headers = new HttpHeaders().set(
+        "Authorization",
+        `Token ${localStorage.getItem('token')}`
+      )
+
+      this.http.get(apiUrl,{headers}).subscribe({
+        next: (response : any) =>{
+          this.watchlist = response
+          console.log("Watchlist récupérée avec succès :" , response)
+        },
+        error : (error:any) => {
+          console.error("Erreur lors de la récupération de la watchlist", error)
+        }
+      })
+  }
   ngOnInit(): void {
     // Récupérer les informations de l'utilisateur depuis le localStorage
     const userString = localStorage.getItem('user');
     if (userString) {
       this.userInfo = JSON.parse(userString);
-      // Appel de la méthode pour ajouter l'utilisateur connecté à la watchlist
-      this.ajouterWatchList(this.userInfo.id);
+      this.initializeWatchlist()
     } else {
       console.log('Aucune information utilisateur trouvée.');
     }
@@ -54,13 +74,22 @@ export class FindSeriesComponent {
   }
   infini: number = Infinity
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public snackbar: MatSnackBar) {
     // Appel de la méthode pour extraire les genres uniques
     this.extraireGenresUnique()
     this.selectRandomSerie()
-
   }
 
+  // Méthode pour initialiser la watchlist
+
+
+  isThisSerieWathclist(serie:any):boolean{
+    return this.watchlist.some((entry:any) => entry.titre === serie.titre)
+  }
+
+  isSerieHistorique(serie:any):boolean{
+    return this.historique.some((entry:any) => entry.titre === serie.titre)
+  }
 
   // Tableau pour stocker les choix et filtré
   filters: any = {
@@ -244,7 +273,10 @@ export class FindSeriesComponent {
     }
   }
 
-
+  // Vérifie si la série est déjà dans la watchlist
+  isSerieWatchlist(serie: any): boolean {
+    return this.watchlist.some((entry: { titre: any; }) => entry.titre === serie.titre)
+  }
 
   public selectedRandomSerie: any
   // Méthode pour sélectionner la série de manière Aléatoire
@@ -256,6 +288,13 @@ export class FindSeriesComponent {
 
     // Filtre les séries qui correspondent aux critères
     const seriesFiltrees = this.series.filter((serie: any) => {
+      // Vérifie si la série est déjà dans la watchlist
+      if (this.isSerieWatchlist(serie)) {
+        return false
+      }
+      if(this.isSerieHistorique(serie)){
+        return false
+      }
       // Vérifie les genres
       const genrePresent = this.filters.genre.some((genre: string) => serie.genres.indexOf(genre) !== -1);
 
@@ -271,12 +310,15 @@ export class FindSeriesComponent {
 
       // Vérifie les scores de presse
       const pressScoreInclus = this.filters.pressScore.some((score: number) => {
-        return serie.press_score >= score;
-      })
+        return serie.press_score === score;
+    })
 
       return genrePresent && dateSortieInclus && pressScoreInclus && dureeInclus;
     })
 
+     // Désactiver le bouton si une seule série est disponible
+     this.isButtonDisabled = seriesFiltrees.length <= 1;
+     
     // Afficher le contenu du tableau filtré
     console.log("Séries filtrées :", seriesFiltrees);
 
@@ -311,6 +353,7 @@ export class FindSeriesComponent {
       this.divVisible = "serieAleatoire"
     }
   }
+
   // Je fais pareil pour un retour en arrière
   retour() {
     if (this.divVisible === "serieAleatoire") {
@@ -355,17 +398,30 @@ export class FindSeriesComponent {
     // Envoyer la requête POST à l'API Django
     this.http.post(apiUrl, data, httpOptions).subscribe({
       next: (response: any) => {
-        console.log("Série ajoutée avec succès à la watchlist", response);
+        console.log("Série ajoutée avec succès à la watchlist.", response);
+        this.openSnackBar("Série ajoutée a la watchlist", "Fermer", "success-snack")
       },
       error: (error: any) => {
         console.error("Erreur lors de l'ajout", error);
+        this.openSnackBar("Erreur, série déjà ajoutée à la watchlist", "Fermer", "error-snack")
       }
     });
   }
 
+  // Pop Up lors du clique sur le bouton ajoutée à la watchlist
+  openSnackBar(message: string, action: string, className: string) {
+    this.snackbar.open(message, action, {
+      duration: 2000,
+      panelClass: [className]
+    })
+  }
+
+
+
+
   // Mise en place du show Details
   details: any[] = []
-  detailsVisible: boolean [] = []
+  detailsVisible: boolean[] = []
 
   // Afficher les détails lors du survol
   showDetails(oeuvre: any, index: number) {
@@ -390,4 +446,44 @@ export class FindSeriesComponent {
   }
 
 
+  dejaVu(selectedSerie : any): void{
+    if(!this.userInfo){
+      console.error("Informations dutilisateur non disponible")
+      return
+    }
+
+    // Définir l'url de l'api de Django pour la watchlist
+    const apiUrl = 'http://localhost:8000/watchlist/'
+
+    // Définir les données à envoyer
+    const data = {
+      user_id: this.userInfo.id,
+      titre:selectedSerie.titre,
+      illustration: selectedSerie.illustration_url,
+      vu: true,
+      a_regarder_plus_tard : true
+    }
+
+    // Définir l'en-tête de la requête
+    const httpOptions = {
+      headers : new HttpHeaders({
+        'Content-type' : 'application/json',
+        'Authorization' : 'Token ' + localStorage.getItem('token')
+      })
+    }
+
+    // Envoyer la requête POST à l'API Django
+    this.http.post(apiUrl, data, httpOptions).subscribe({
+      next:(response:any) => {
+        console.log("Ajout avec succès.")
+        this.openSnackBar("Série ajoutée avec succès à la watchlist en 'Déja vu'. ","Fermer","succes-snackbar")
+      },
+      error:(error:any) => {
+        console.error("Erreur lors de l'ajout.")
+        this.openSnackBar("Erreur, lors de l'ajout", "Fermer","error-snack")
+      }
+    })
+  }
 }
+
+

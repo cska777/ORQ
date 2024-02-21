@@ -139,7 +139,7 @@
             <br><p class="span">Retour</p>
         </button>
 
-        <button (click)="selectRandomSerie()">&#x261E; 
+        <button (click)="selectRandomSerie()" [disabled]="isButtonDisabled">&#x261E; 
             <br><p class="span">Série suivante</p>
         </button>
     </div>
@@ -171,11 +171,11 @@
 
         <div *ngIf="historique.length > 0">
             <ul *ngFor="let oeuvre of historique; let i = index">
-                <li class='historiqueLi' (click)="showDetails(oeuvre, i)">
+                <li class='historiqueLi' (click)="showDetails(oeuvre, i)" class="text-black">
                     {{ oeuvre.titre }}
                 </li>
                 <div>
-                    <div *ngIf="detailsVisible[i]">
+                    <div *ngIf="detailsVisible[i]" class="text-black">
                         {{oeuvre.titre}}<br>
                         <img id="detailsImg" src="{{oeuvre.illustration_url}}" alt="illustration série">
                         {{ oeuvre.press_score }}<br>
@@ -183,6 +183,7 @@
                         {{ oeuvre.genres }}<br>
                         {{ oeuvre.synopsis }}
                         <button class="btn btn-primary" (click)="ajouterWatchList(oeuvre)">Ajouter à la watchlist</button>
+                        <button class="btn btn-primary" (click)="dejaVu(oeuvre)">Déjà vu</button>
                     </div>
                 </div>
             </ul>
@@ -193,6 +194,7 @@
         <p>Aucune Série trouvée veuillez ajuster vos critères</p>
     </ng-template>
     <button mat-button class="btn btn-primary" (click)="ajouterWatchList(selectedRandomSerie)">Ajouter à la watchlist</button>
+    <button mat-button class="btn btn-primary" (click)="dejaVu(selectedRandomSerie)">Déjà vu</button>
 </div>
 
 <!-- !!!!!!!!! NOTE A MOI MEME N'OUBLIE PAS DE SUPPRIMER CETTE PARTIE !!!!!!!!!!!!! -->
