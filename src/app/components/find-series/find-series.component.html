@@ -167,6 +167,8 @@
             <p><strong>Genre(s) : </strong>{{selectedRandomSerie.genres}}</p>
             <p class="synopsis"><strong>Synopsis : </strong> {{selectedRandomSerie.synopsis}}</p>
             <p><strong>Duree moyenne d'un épisode : </strong>{{selectedRandomSerie.duree_moyenne_episode}} min </p>
+            <p>{{selectedRandomSerie.createurs}}</p><br>
+            <p>{{selectedRandomSerie.acteurs}}</p>
         </div>
 
         <div *ngIf="historique.length > 0">

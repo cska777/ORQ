@@ -1,11 +1,11 @@
+import os
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, WatchlistSerializer
+from .serializers import UserSerializer, WatchlistSerializer, FilmsSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_protect
 
 from django.shortcuts import get_object_or_404
 
@@ -13,7 +13,10 @@ from rest_framework.decorators import authentication_classes,permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Watchlist
+from watchlist.models import Watchlist
+from films.models import Films
+
+
 
 
 @api_view(['POST'])
@@ -55,7 +58,10 @@ def watchlist(request):
         user_id = request.user.id
         titre = request.data.get('titre')
         illustration = request.data.get('illustration')
-        vu = request.data.get('vu')  # Extraire la valeur de 'vu' depuis la requête
+        vu = request.data.get('vu')
+        type = request.data.get('type')
+        duree = request.data.get('duree')
+        date_sortie = request.data.get('date_sortie')
 
 
         # Vérifier si les données requises sont présentes
@@ -74,7 +80,10 @@ def watchlist(request):
             vu=vu,
             aime=False,
             en_cours=False,
-            illustration = illustration
+            illustration = illustration,
+            type = type,
+            duree = duree,
+            date_sortie = date_sortie
         )
         return Response("Série ajoutée avec succès à la watchlist", status=status.HTTP_201_CREATED)
     elif request.method == 'GET':
@@ -113,6 +122,12 @@ def watchlist_update(request, oeuvre_id):
                 watchlist_entry.aime = request.data['aime']
             if 'en_cours' in request.data :
                 watchlist_entry.en_cours = request.data['en_cours']
+            if 'type' in request.data :
+                watchlist_entry.type = request.data['type']
+            if 'duree' in request.data :
+                watchlist_entry.duree = request.data['duree']
+            if 'date_sortie' in request.data :
+                watchlist_entry.date_sortie = request.data['date_sortie']
             
             # Enregistrer les modifications
             watchlist_entry.save()
@@ -120,3 +135,14 @@ def watchlist_update(request, oeuvre_id):
         else : 
             return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+
+@api_view(["GET"])
+def films(request):
+    # Récupérez tous les objets Films
+    films = Films.objects.all()
+
+    # Serializer les objets Films
+    serializer =  FilmsSerializer(films, many=True)
+
+    # Renvoyer les données serialisées en réponse
+    return Response(serializer.data)

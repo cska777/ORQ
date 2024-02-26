@@ -8,5 +8,5 @@ urlpatterns = [
     path('test_token/', views.test_token, name='test_token'),
     path('watchlist/', views.watchlist, name='watchlist'),
     path('watchlist/<int:oeuvre_id>/', views.watchlist_update, name='watchlist_update'),
-
+    path('films/', views.films, name='films'),
 ]

@@ -163,7 +163,7 @@ export class FindSeriesComponent {
     // Vérifier si la tranche est déjà slectionnée
     const index = this.tranchesIndexDate(trancheSelectionneeDate)
     if (index > -1) {
-      // Si la tranche est selectionnée, le retirer du tableau
+      // Si la tranche est selectionnée, la retirer du tableau
       this.choix_dateSortie.splice(index, 1)
       this.filters.dateSortie.splice(index, 1)
     } else {
@@ -337,7 +337,7 @@ export class FindSeriesComponent {
 
 
 
-  // Mise en place des slides de chxoix
+  // Mise en place des slides de choix
   divVisible: string = "choixGenre" // Initialise la divVisible à choixGenre par défaut
 
   // Définie la fonction du click qui changera la div visible a la suivante
@@ -381,10 +381,13 @@ export class FindSeriesComponent {
     // Définir les données à envoyer
     const data = {
       user_id: this.userInfo.id,
-      titre: selectedSerie.titre, // Assurez-vous que la propriété titre est correcte
+      titre: selectedSerie.titre,
       illustration: selectedSerie.illustration_url,
       vu: false,
       a_regarder_plus_tard: true,
+      type : selectedSerie.genre_oeuvre,
+      duree : selectedSerie.duree_moyenne_episode,
+      date_sortie : selectedSerie.date_de_sortie
     };
 
     // Définir l'en-tête de la requête
@@ -423,7 +426,7 @@ export class FindSeriesComponent {
   details: any[] = []
   detailsVisible: boolean[] = []
 
-  // Afficher les détails lors du survol
+  // Afficher les détails de l'historique
   showDetails(oeuvre: any, index: number) {
     if (!this.detailsVisible[index]) {
       this.detailsVisible[index] = true
@@ -433,7 +436,8 @@ export class FindSeriesComponent {
         oeuvre.press_score,
         oeuvre.date_de_sortie,
         oeuvre.genres,
-        oeuvre.synopsis
+        oeuvre.synopsis,
+        oeuvre.duree_moyenne_episode
       ]
     } else {
       this.detailsVisible[index] = false
@@ -458,10 +462,13 @@ export class FindSeriesComponent {
     // Définir les données à envoyer
     const data = {
       user_id: this.userInfo.id,
-      titre:selectedSerie.titre,
+      titre: selectedSerie.titre,
       illustration: selectedSerie.illustration_url,
       vu: true,
-      a_regarder_plus_tard : true
+      a_regarder_plus_tard: true,
+      type : selectedSerie.genre_oeuvre,
+      duree : selectedSerie.duree_moyenne_episode,
+      date_sortie : selectedSerie.date_de_sortie
     }
 
     // Définir l'en-tête de la requête
@@ -475,11 +482,11 @@ export class FindSeriesComponent {
     // Envoyer la requête POST à l'API Django
     this.http.post(apiUrl, data, httpOptions).subscribe({
       next:(response:any) => {
-        console.log("Ajout avec succès.")
+        console.log("Ajout avec succès.", response)
         this.openSnackBar("Série ajoutée avec succès à la watchlist en 'Déja vu'. ","Fermer","succes-snackbar")
       },
       error:(error:any) => {
-        console.error("Erreur lors de l'ajout.")
+        console.error("Erreur lors de l'ajout.", error)
         this.openSnackBar("Erreur, lors de l'ajout", "Fermer","error-snack")
       }
     })

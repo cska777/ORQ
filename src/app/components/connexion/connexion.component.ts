@@ -48,6 +48,7 @@ export class ConnexionComponent {
           } else {
             console.log("Token d'authentification ou informations utilisateur manquants dans la réponse.");
           }
+          window.location.reload()
         },
         error: (error: any) => {
           console.log('Connexion échouée', error);

@@ -1,6 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClientModule} from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -20,7 +19,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './accueil.component.css'
 })
 export class AccueilComponent {
-  userInfo: any;
+  userInfo: any
+  
 
   constructor() { }
 

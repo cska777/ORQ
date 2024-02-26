@@ -36,3 +36,7 @@ a:hover {
 .dropdown-item {
     color: black;
 }
+
+li{
+    cursor: pointer;
+}

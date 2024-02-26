@@ -18,10 +18,10 @@
             Mon profil
         </a>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/connexion">Connexion</a></li>
-            <li><a class="dropdown-item" routerLink="/inscription">Inscription</a></li>
-            <li><a class="dropdown-item" routerLink="/watchlist">Ma watchlist</a></li>
+            <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/connexion">Connexion </li>
+            <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/inscription">Inscription</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/watchlist">Ma watchlist</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" (click)="onLogout()">Deconnexion</li>
         </ul>
     </li>
-    <button (click)="onLogout()">Déconnexion</button>
 </nav>
