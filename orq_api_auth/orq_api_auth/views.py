@@ -6,6 +6,7 @@ from .serializers import UserSerializer, WatchlistSerializer, FilmsSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 from django.shortcuts import get_object_or_404
 
@@ -41,7 +42,55 @@ def login(request):
     serializer = UserSerializer(instance=user)
     return Response({"token": token.key, "user": serializer.data})
 
+@api_view(['PUT', 'OPTIONS'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_user(request):
+    if request.method == "PUT" or request.method == "OPTIONS":
+        # Récupérer l'utilisateur qu'on veut modifier
+        user = request.user
 
+        # Vérifier si les données de mise à jour sont présentes dans la requête
+        if 'username' in request.data:
+            print("Username reçu :", request.data['username'])
+
+            user.username = request.data['username']
+
+            # Enregistrer les modifications de l'utilisateur
+            user.save()
+            print("Utilisateur mis à jour avec succès")
+
+            # Sérializer l'utilisateur mis à jour si nécessaire
+            serializer = UserSerializer(user)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            print("Données de mise à jour manquantes dans la requête")
+            return Response("Données de mise à jour manquantes", status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication,TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    data = request.data
+
+    old_password = data.get('old_password')
+    new_password = data.get('new_password')
+
+    if not old_password or new_password:
+        return Response("Ancien et nouveau mot de passe requis",status=status.HTTP_400_BAD_REQUEST)
+    
+    if not user.check_password(old_password):
+        return Response("Ancien mot de passe incorrect", status=status.HTTP_400_BAD_REQUEST)
+    
+    user.set_password(new_password)
+    user.save()
+
+    return Response("Mot de passe modifié avec succès", status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])

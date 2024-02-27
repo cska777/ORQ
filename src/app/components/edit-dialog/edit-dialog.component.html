@@ -1,0 +1,11 @@
+<h2>Modifier {{ data.field }}</h2>
+<div *ngIf="isPasswordField">
+    <input type="password" [(ngModel)]="oldPassword" placeholder="Ancien mot de passe">
+    <input type="password" [(ngModel)]="newPassword" placeholder="Nouveau mot de passe">
+    <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirmer le nouveau mot de passe">
+</div>
+<div *ngIf="!isPasswordField">
+    <input type="text" [(ngModel)]="newValue" placeholder="Nouveau Username">
+</div>
+<button mat-button (click)="onSave()">Sauvegarder les modifications</button>
+<button mat-button (click)="onCancelClick()">Annuler</button>

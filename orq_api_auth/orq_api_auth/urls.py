@@ -9,4 +9,6 @@ urlpatterns = [
     path('watchlist/', views.watchlist, name='watchlist'),
     path('watchlist/<int:oeuvre_id>/', views.watchlist_update, name='watchlist_update'),
     path('films/', views.films, name='films'),
+    path('update_user/', views.update_user, name='update_user'),
+    path('change_password/', views.change_password, name='change_password')
 ]

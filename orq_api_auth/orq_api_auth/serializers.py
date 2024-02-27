@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'password', 'email']
 
+
 class WatchlistSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Watchlist

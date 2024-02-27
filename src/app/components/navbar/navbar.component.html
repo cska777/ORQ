@@ -1,3 +1,4 @@
+
 <nav>
     <li class="nav-item dropdown d-flex align-content-center">
         <a class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -14,13 +15,17 @@
     </div>
 
     <li class="nav-item dropdown d-flex align-content-center">
-        <a class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Mon profil
+        <a *ngIf="isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        ICONE {{userInfo.username}}
+        </a>
+        <a *ngIf="!isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        ICONE
         </a>
         <ul class="dropdown-menu">
             <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/connexion">Connexion </li>
             <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/inscription">Inscription</li>
             <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/watchlist">Ma watchlist</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/profil">Voir mon profil</li>
             <li *ngIf="isUserLoggedIn" class="dropdown-item" (click)="onLogout()">Deconnexion</li>
         </ul>
     </li>
