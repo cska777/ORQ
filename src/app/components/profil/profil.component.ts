@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { ApiService } from '../../api.service';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-profil',
@@ -15,12 +16,11 @@ import { ApiService } from '../../api.service';
 })
 export class ProfilComponent implements OnInit {
   userInfo: any
-
   newUsername: string = ""
   newPassword: string = ""
   isPopUpOpen: boolean = false
 
-  constructor(private router: Router, public dialog: MatDialog, private apiService: ApiService) { }
+  constructor(private router: Router, public dialog: MatDialog, private apiService: ApiService, private userService:UserService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem("token")
@@ -28,11 +28,8 @@ export class ProfilComponent implements OnInit {
       this.router.navigate(['/'])
     }
 
-    const userString = localStorage.getItem("user")
-    if (userString) {
-      this.userInfo = JSON.parse(userString)
-    }
-
+    this.userService.loadUserInfo()
+    this.userInfo = this.userService.getUserInfo()
   }
 
 
@@ -43,6 +40,12 @@ export class ProfilComponent implements OnInit {
       height: '400px',
       data: { field }
     });
+
+    dialogRef.componentInstance.userInfoUpdated.subscribe(() => {
+      this.userService.updateUsername(this.newUsername)
+      // Charger à nouveau les informations utilisateur après la mise à jour
+      this.userService.loadUserInfo()
+    })
 
     dialogRef.afterClosed().subscribe((result: {oldPassword: string, newPassword:string} | null ) => {
       if(result){
@@ -74,8 +77,13 @@ export class ProfilComponent implements OnInit {
   }
 
   changePassword(newPassword:string, oldPassword:string):void{
+    const token = localStorage.getItem("token")
+    if(!token){
+      console.log("Token d'indentification introuvable")
+      return
+    }
     // Changement du mot de passe via le service API
-    this.apiService.changePassword(newPassword,oldPassword).subscribe({
+    this.apiService.changePassword(newPassword,oldPassword,token).subscribe({
       next :(response:any) => {
         console.log("Mot de passe changé avec succès :", response)
       },

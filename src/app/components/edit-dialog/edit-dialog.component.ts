@@ -17,7 +17,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material
   styleUrl: './edit-dialog.component.css'
 })
 export class EditDialogComponent {
-
+  @Output() userInfoUpdated: EventEmitter<void> = new EventEmitter<void>
 
   isPasswordField: boolean = false
   newValue: string = ''
@@ -46,6 +46,8 @@ export class EditDialogComponent {
       }
       this.dialogRef.close({ oldPassword: this.oldPassword, newPassword: this.newPassword })
     } else {
+      // Émettre l'évènement pour indiquer que les information sont à jour
+      this.userInfoUpdated.emit()
       // Gérer la sauvegarde du username
       this.dialogRef.close(this.newValue)
     }

@@ -1,32 +1,98 @@
-<h2>Ma Watchlist</h2>
-
-<div *ngIf="userInfo">
-    <h2>Informations sur l'utilisateur</h2>
-    <p>Nom : {{ userInfo.username }}</p>
-    <p>Email : {{ userInfo.email }}</p>
-    <!-- Affichez d'autres informations utilisateur ici -->
-  </div>
-<div *ngIf="watchlist.length === 0">
-  <p>Aucune série dans la watchlist.</p>
-</div>
-<ul *ngIf="watchlist.length > 0">
-  <li *ngFor="let oeuvre of watchlist">
-    <h4>{{ oeuvre.titre }}</h4>
-    <ng-container *ngIf="oeuvre.illustration_url !== null; else pasIllu" >
-      <img src="{{oeuvre.illustration}}" alt="illustration" id="illuSerie"><br>
+<!-- <h1>Ma Watchlist</h1> -->
+<h2>À regarder plus tard</h2>
+<div class="wrapper tiles" #watchlater>
+  <button class="wrapper__btn wrapper__btn--left" (click)="moveWrapper(-1, watchlaterRef,'watchlater')">&lt;</button>
+  <div class="wrapper__sections tiles__sections" [style.transform]="'translateX(' + currentIndex * -100 + '%)'">
+    <ng-container *ngFor="let section of watchlistSections['nonVu']; let i = index">
+      <section class="wrapper__section tiles__section">
+        <ng-container *ngFor="let oeuvre of section">
+          <ng-container *ngIf="oeuvre.vu !== true">
+            <div class="wrapper__item tile">
+              <ng-container *ngIf="oeuvre.illustration_url !== null; else pasIllu">
+                <img [src]="oeuvre.illustration" [alt]="'illustration de ' +(oeuvre.titre)">
+              </ng-container>
+              <ng-template #pasIllu>
+                <img src="assets/image/ORQ.png" alt="noIllu">
+              </ng-template>
+              <div class="details">
+                <span class="title"><p>{{ oeuvre.titre }}</p></span><br>
+                <span class="vu">
+                  <i class="fa-regular fa-eye" [ngClass]="{ 'checked': oeuvre.vu }"
+                    (click)="updateWatchlist(oeuvre.id, { vu: !oeuvre.vu })"></i>
+                </span><br>
+                <button class="detailsShow buttonDetails" (click)="openDetails(oeuvre)">Voir détails</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </section>
     </ng-container>
-    <ng-template #pasIllu>
-      <img src="assets/image/ORQ.png" alt="noIllu"><br>
-    </ng-template>
-    id : {{ oeuvre.id }}<br>
-    vu :
-<i class="fa-regular fa-eye" [ngClass]="{ 'checked': oeuvre.vu }" (click)="updateWatchlist(oeuvre.id, { vu: !oeuvre.vu })"></i>
-<br>
-    En cours :
-    <input type="checkbox" [(ngModel)]="oeuvre.en_cours" (change)="updateWatchlist(oeuvre.id, { en_cours: oeuvre.en_cours })"><br>
-   <textarea [(ngModel)]="oeuvre.mon_avis" (input)="updateTempMonAvis($event)" placeholder="Mon avis"></textarea>
-   <button (click)="sendMonAvis(oeuvre.id)">Mettre à jour</button>
-    <button (click)="removeFromWatchlist(oeuvre.id)">Retirer de la watchlist</button>
-  </li>
-</ul>
+  </div>
+  <button class="wrapper__btn wrapper__btn--right" (click)="moveWrapper(1, watchlaterRef,'watchlater')">&gt;</button>
+</div>
+
+<h2>Séries en cours</h2>
+<div class="wrapper tiles" #enCours>
+  <button class="wrapper__btn wrapper__btn--left" (click)="moveWrapper(-1, enCoursRef,'enCours')">&lt;</button>
+  <div class="wrapper__sections tiles__sections" [style.transform]="'translateX(' + currentIndex * -100 + '%)'">
+    <ng-container *ngFor="let section of watchlistSections['enCours']; let i = index">
+      <section class="wrapper__section tiles__section">
+        <ng-container *ngFor="let oeuvre of section">
+          <ng-container *ngIf="oeuvre.en_cours === true">
+            <div class="wrapper__item tile">
+              <ng-container *ngIf="oeuvre.illustration_url !== null; else pasIllu">
+                <img [src]="oeuvre.illustration" [alt]="'illustration de ' +(oeuvre.titre)">
+              </ng-container>
+              <ng-template #pasIllu>
+                <img src="assets/image/ORQ.png" alt="noIllu">
+              </ng-template>
+              <div class="details">
+                <span class="title"><p>{{ oeuvre.titre }}</p></span><br>
+                <span class="vu">
+                  <i class="fa-regular fa-eye" [ngClass]="{ 'checked': oeuvre.vu }"
+                    (click)="updateWatchlist(oeuvre.id, { vu: !oeuvre.vu })"></i>
+                </span><br>
+                <button class="detailsShow buttonDetails" (click)="openDetails(oeuvre)">Voir détails</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </section>
+    </ng-container>
+  </div>
+  <button class="wrapper__btn wrapper__btn--right" (click)="moveWrapper(1, enCoursRef,'enCours')">&gt;</button>
+</div>
+
+<h2>Déjà vu</h2>
+<div class="wrapper tiles" #dejaVu>
+  <button class="wrapper__btn wrapper__btn--left" (click)="moveWrapper(-1, dejaVuRef,'dejaVu')">&lt;</button>
+  <div class="wrapper__sections tiles__sections" [style.transform]="'translateX(' + currentIndex * -100 + '%)'">
+    <ng-container *ngFor="let section of watchlistSections['dejaVu']; let i = index">
+      <section class="wrapper__section tiles__section">
+        <ng-container *ngFor="let oeuvre of section">
+          <ng-container *ngIf="oeuvre.vu === true">
+            <div class="wrapper__item tile">
+              <ng-container *ngIf="oeuvre.illustration_url !== null; else pasIllu">
+                <img [src]="oeuvre.illustration" [alt]="'illustration de ' +(oeuvre.titre)">
+              </ng-container>
+              <ng-template #pasIllu>
+                <img src="assets/image/ORQ.png" alt="noIllu">
+              </ng-template>
+              <div class="details">
+                <span class="title"><p>{{ oeuvre.titre }}</p></span><br>
+                <span class="vu">
+                  <i class="fa-regular fa-eye" [ngStyle]="{'color' : oeuvre.vu ? '#FFC800' : 'white'}"
+                    (click)="updateWatchlist(oeuvre.id, { vu: !oeuvre.vu })"></i>
+                </span><br>
+                <button class="detailsShow buttonDetails" (click)="openDetails(oeuvre)">Voir détails</button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </section>
+    </ng-container>
+  </div>
+  <button class="wrapper__btn wrapper__btn--right" (click)="moveWrapper(1, dejaVuRef,'dejaVu')">&gt;</button>
+</div>
+
 

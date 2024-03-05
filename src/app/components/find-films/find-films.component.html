@@ -1,174 +1,174 @@
-<h1>Trouver son film</h1>
-<div *ngIf="userInfo">
-    <h2>Informations sur l'utilisateur</h2>
-    <p>Nom: {{ userInfo.username}}</p>
-    <p>Nom: {{ userInfo.email}}</p>
-</div>
-<h1>TROUVE TON FILM</h1>
-
 <div class="corps2">
-
-    <div id="choixGenre" *ngIf="divVisible === 'choixGenre'" class="d-flex inline flex-wrap justify-content-center">
-        <ng-container *ngFor="let genre of genresUnique">
-
-            <button id="seriesCard" (click)="choisirGenre(genre)"
-                [ngClass]="{'selected' : choix_genre.includes(genre), 'unselected' : !choix_genre.includes(genre)}"
-                style="display: flex; flex-direction: column;">
-<!--                 <img [src]="'../assets/image/' + genre + '.jpeg'" alt="{{ genre }}" class="genre-image" width="220px"> -->
-                {{genre}}
-            </button>
-
-        </ng-container><br>
-        <ng-container *ngIf="choix_genre.length >= 1; else noScore">
-            <button class="suivantBtn btn btn-info mx-5 btnNext" (click)="suivant()" style="position: fixed;  right: 20px; bottom: 160px;" id="btnNext">Suivant</button>
-        </ng-container>
-        <ng-template #noScore>
-            <button class="suivantBtn btn btn-info mx-5 disabled btnNext" (click)="suivant()" style="position: fixed; right: 20px; bottom: 160px;" id="btnNext">Suivant</button>
-        </ng-template>
+    <div *ngIf="isLoading" class="container">
+        <span class="loader"></span>
     </div>
+    <div *ngIf="!isLoading">
+        <h1>TROUVE TON FILM</h1>
+        <div id="choixGenre" *ngIf="divVisible === 'choixGenre'" class="d-flex inline flex-wrap justify-content-center">
+            <ng-container *ngFor="let genre of genresUnique">
 
-    <div id="choixDuree" *ngIf="divVisible === 'choixDuree'">
-        <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 0, fin : 59})" [ngClass]="{
+                <button id="seriesCard" (click)="choisirGenre(genre)"
+                    [ngClass]="{'selected' : choix_genre.includes(genre), 'unselected' : !choix_genre.includes(genre)}"
+                    style="display: flex; flex-direction: column;">
+                    <!--                 <img [src]="'../assets/image/' + genre + '.jpeg'" alt="{{ genre }}" class="genre-image" width="220px"> -->
+                    {{genre}}
+                </button>
+
+            </ng-container><br>
+            <ng-container *ngIf="choix_genre.length >= 1; else noScore">
+                <button class="suivantBtn btn btn-info mx-5 btnNext" (click)="suivant()"
+                    style="position: fixed;  right: 20px; bottom: 160px;" id="btnNext">Suivant</button>
+            </ng-container>
+            <ng-template #noScore>
+                <button class="suivantBtn btn btn-info mx-5 disabled btnNext" (click)="suivant()"
+                    style="position: fixed; right: 20px; bottom: 160px;" id="btnNext">Suivant</button>
+            </ng-template>
+        </div>
+
+        <div id="choixDuree" *ngIf="divVisible === 'choixDuree'">
+            <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 0, fin : 59})" [ngClass]="{
         'selected' : isTrancheDureeSelected({ debut : 0 , fin : 59}),
         'unselected' : !isTrancheDureeSelected({ debut : 0 , fin : 59})
     }">
-            moins d'une heure
-        </button>
-        <button class="btn btn-success m-5" (click)="choisirTrancheDuree({ debut : 60, fin : 120})" [ngClass]="{
+                moins d'une heure
+            </button>
+            <button class="btn btn-success m-5" (click)="choisirTrancheDuree({ debut : 60, fin : 120})" [ngClass]="{
         'selected' : isTrancheDureeSelected({debut : 60, fin : 120}),
         'unselected' : !isTrancheDureeSelected({debut : 60, fin : 120})
     }">
-            1h à 2h
-        </button>
-        <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 121, fin : 180 })" [ngClass]="{
+                1h à 2h
+            </button>
+            <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 121, fin : 180 })" [ngClass]="{
         'selected' : isTrancheDureeSelected({ debut : 121 , fin : 180}),
         'unselected' : !isTrancheDureeSelected({ debut : 121 , fin : 180})
     }">
-            plus de 2h
-        </button>
-        <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 181, fin : infini })" [ngClass]="{
+                plus de 2h
+            </button>
+            <button class="btn btn-success" (click)="choisirTrancheDuree({ debut : 181, fin : infini })" [ngClass]="{
         'selected' : isTrancheDureeSelected({ debut : 181 , fin : infini}),
         'unselected' : !isTrancheDureeSelected({ debut : 181 , fin : infini})
     }">
-            plus de 3h
-        </button>
-        <ng-container *ngIf="choix_duree.length >= 1; else noDuree">
-            <button class="suivantBtn btn btn-info mx-5" (click)="suivant()">Suivant</button>
-        </ng-container>
-        <ng-template #noDuree>
-            <button class="suivantBtn btn btn-info mx-5 disabled" (click)="suivant()">Suivant</button>
-        </ng-template>
-        <button class="suivantBtn btn btn-info" (click)="retour()">Retour</button>
-    </div>
+                plus de 3h
+            </button>
+            <ng-container *ngIf="choix_duree.length >= 1; else noDuree">
+                <button class="suivantBtn btn btn-info mx-5" (click)="suivant()">Suivant</button>
+            </ng-container>
+            <ng-template #noDuree>
+                <button class="suivantBtn btn btn-info mx-5 disabled" (click)="suivant()">Suivant</button>
+            </ng-template>
+            <button class="suivantBtn btn btn-info" (click)="retour()">Retour</button>
+        </div>
 
 
-    <div id="dateSortie" *ngIf="divVisible === 'dateSortie'">
-        <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 0, fin: 1970 })" [ngClass]="{
+        <div id="dateSortie" *ngIf="divVisible === 'dateSortie'">
+            <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 0, fin: 1970 })" [ngClass]="{
         'selected': isTrancheDateSelected({ debut: 0, fin: 1970 }), 
         'unselected': !isTrancheDateSelected({ debut: 0, fin: 1970 })
     }">
-            Avant 1970
-        </button>
+                Avant 1970
+            </button>
 
-        <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1971, fin: 1990 })" [ngClass]="{
+            <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1971, fin: 1990 })" [ngClass]="{
         'selected': isTrancheDateSelected({ debut: 1971, fin: 1990 }), 
         'unselected': !isTrancheDateSelected({ debut: 1971, fin: 1990 })
     }">
-            1971-1990
-        </button>
+                1971-1990
+            </button>
 
-        <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1991, fin: 2010 })" [ngClass]="{
+            <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 1991, fin: 2010 })" [ngClass]="{
         'selected': isTrancheDateSelected({ debut: 1991, fin: 2010 }), 
         'unselected': !isTrancheDateSelected({ debut: 1991, fin: 2010 })
     }">
-            1991-2010
-        </button>
+                1991-2010
+            </button>
 
-        <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 2011, fin: infini })" [ngClass]="{
+            <button class="btn btn-danger m-2" (click)="choisirTrancheDate({ debut: 2011, fin: infini })" [ngClass]="{
         'selected': isTrancheDateSelected({ debut: 2011, fin: infini }), 
         'unselected': !isTrancheDateSelected({ debut: 2011, fin: infini })
     }">
-            Après 2010
-        </button>
-        <ng-container *ngIf="choix_dateSortie.length >= 1; else noScore">
-            <button class="suivantBtn btn btn-info mx-5" (click)="suivant()">Suivant</button>
-        </ng-container>
-        <ng-template #noScore>
-            <button class="suivantBtn btn btn-info mx-5 disabled" (click)="suivant()">Suivant</button>
-        </ng-template>
-        <button class="suivantBtn btn btn-info" (click)="retour()">Retour</button>
-    </div>
-
-<!-- SECTION CHOIX SCORE -->
-    <div id="pressScore" *ngIf="divVisible === 'pressScore'">
-        <button class="suivantBtn btn btn-info btnPrevious" (click)="retour()">Retour</button>
-
-        <button class="btn btnStar" (click)="choisirScore(1)"
-            [ngClass]="{'selected' : choix_score.includes(1), 'unselected' : !choix_score.includes(1)}">
-            <img src="../../../assets/image/star-one.png" alt="note_d'une_étoile" height="100" width="150">
-        </button>
-
-        <button class="btn btnStar" (click)="choisirScore(2)"
-            [ngClass]="{'selected' : choix_score.includes(2), 'unselected' : !choix_score.includes(2)}">
-            <img src="../../../assets/image/star-two.png" alt="note_deux_étoiles" height="100" width="150">
-        </button>
-
-        <button class="btn btnStar" (click)="choisirScore(3)"
-            [ngClass]="{'selected' : choix_score.includes(3), 'unselected' : !choix_score.includes(3)}">
-            <img src="../../../assets/image/star-three.png" alt="note_trois_étoiles" height="100" width="150">
-        </button>
-
-        <button class="btn btnStar" (click)="choisirScore(4)"
-            [ngClass]="{'selected' : choix_score.includes(4), 'unselected' : !choix_score.includes(4)}">
-            <img src="../../../assets/image/star-four.png" alt="note_quatre_étoiles" height="100" width="150">
-        </button>
-
-        <button class="btn btnStar" (click)="choisirScore(5)"
-            [ngClass]="{'selected' : choix_score.includes(5), 'unselected' : !choix_score.includes(5)}">
-            <img src="../../../assets/image/star-five.png" alt="note_cinq_étoiles" height="100" width="150">
-        </button>
-
-        <ng-container *ngIf="choix_score.length >= 1; else noScore">
-            <button class="suivantBtn btn btn-info mx-5 btnNext" (click)="suivant()">Suivant</button>
-        </ng-container>
-        <ng-template #noScore>
-            <button class="suivantBtn btn btn-info mx-5 disabled btnNext" (click)="suivant()">Suivant</button>
-        </ng-template>
-    </div>
-<!-- Proposition de film -->
-<div class="filmAleatoire" *ngIf="divVisible === 'filmAleatoire'">
-    <div class="filmAleatoire">
-        <button (click)="retour()"><br>
-            <p class="span">Retour</p>
-        </button>
-
-        <button (click)="selectRandomFilm()" [disabled]="isButtonDisabled"><br>
-            <p class="span">Série suivante</p>
-        </button>
-    </div>
-
-    <div class="film-proposer">
-        <ng-container *ngIf="selectedRandomFilm; else noFilmFound">
-            <ng-container *ngIf="selectedRandomFilm.illustration_url !== null; else pasIllu">
-                <div class="div-imgFilms">
-                    <img id="filmFilm" alt="illustration_du_film" src="{{selectedRandomFilm.illustration_url}}" width="250px">
-                </div>
+                Après 2010
+            </button>
+            <ng-container *ngIf="choix_dateSortie.length >= 1; else noScore">
+                <button class="suivantBtn btn btn-info mx-5" (click)="suivant()">Suivant</button>
             </ng-container>
-
-            <ng-template #pasIllu>
-                <div class="div-imgFilms mb-5">
-                    <img src="../../assets/image/non_disponible.jpeg" alt="illustration non disponible">
-                </div>
+            <ng-template #noScore>
+                <button class="suivantBtn btn btn-info mx-5 disabled" (click)="suivant()">Suivant</button>
             </ng-template>
+            <button class="suivantBtn btn btn-info" (click)="retour()">Retour</button>
+        </div>
 
-            <div class="div-infoFilm">
-                <h2>{{ selectedRandomFilm.titre}}</h2>
+        <!-- SECTION CHOIX SCORE -->
+        <div id="pressScore" *ngIf="divVisible === 'pressScore'">
+            <button class="suivantBtn btn btn-info btnPrevious" (click)="retour()">Retour</button>
+
+            <button class="btn btnStar" (click)="choisirScore(1)"
+                [ngClass]="{'selected' : choix_score.includes(1), 'unselected' : !choix_score.includes(1)}">
+                <img src="../../../assets/image/star-one.png" alt="note_d'une_étoile" height="100" width="150">
+            </button>
+
+            <button class="btn btnStar" (click)="choisirScore(2)"
+                [ngClass]="{'selected' : choix_score.includes(2), 'unselected' : !choix_score.includes(2)}">
+                <img src="../../../assets/image/star-two.png" alt="note_deux_étoiles" height="100" width="150">
+            </button>
+
+            <button class="btn btnStar" (click)="choisirScore(3)"
+                [ngClass]="{'selected' : choix_score.includes(3), 'unselected' : !choix_score.includes(3)}">
+                <img src="../../../assets/image/star-three.png" alt="note_trois_étoiles" height="100" width="150">
+            </button>
+
+            <button class="btn btnStar" (click)="choisirScore(4)"
+                [ngClass]="{'selected' : choix_score.includes(4), 'unselected' : !choix_score.includes(4)}">
+                <img src="../../../assets/image/star-four.png" alt="note_quatre_étoiles" height="100" width="150">
+            </button>
+
+            <button class="btn btnStar" (click)="choisirScore(5)"
+                [ngClass]="{'selected' : choix_score.includes(5), 'unselected' : !choix_score.includes(5)}">
+                <img src="../../../assets/image/star-five.png" alt="note_cinq_étoiles" height="100" width="150">
+            </button>
+
+            <ng-container *ngIf="choix_score.length >= 1; else noScore">
+                <button class="suivantBtn btn btn-info mx-5 btnNext" (click)="suivant()">Suivant</button>
+            </ng-container>
+            <ng-template #noScore>
+                <button class="suivantBtn btn btn-info mx-5 disabled btnNext" (click)="suivant()">Suivant</button>
+            </ng-template>
+        </div>
+        <!-- Proposition de film -->
+        <div class="filmAleatoire" *ngIf="divVisible === 'filmAleatoire'">
+            <div class="filmAleatoire">
+                <button (click)="retour()"><br>
+                    <p class="span">Retour</p>
+                </button>
+
+                <button (click)="selectRandomFilm()" [disabled]="isButtonDisabled"><br>
+                    <p class="span">Propose moi autre chose</p>
+                </button>
             </div>
-        </ng-container>
 
-        <ng-template #noFilmFound>
-            <p>Aucun Film trouvé veuillez ajuster vos critères</p>
-        </ng-template>
+            <div class="film-proposer">
+                <ng-container *ngIf="selectedRandomFilm; else noFilmFound">
+                    <ng-container *ngIf="selectedRandomFilm.illustration_url !== null; else pasIllu">
+                        <div class="div-imgFilms">
+                            <img id="filmFilm" alt="illustration_du_film" src="{{selectedRandomFilm.illustration_url}}"
+                                width="250px">
+                        </div>
+                    </ng-container>
+
+                    <ng-template #pasIllu>
+                        <div class="div-imgFilms mb-5">
+                            <img src="../../assets/image/non_disponible.jpeg" alt="illustration non disponible">
+                        </div>
+                    </ng-template>
+
+                    <div class="div-infoFilm">
+                        <h2>{{ selectedRandomFilm.titre}}</h2>
+                    </div>
+                </ng-container>
+
+                <ng-template #noFilmFound>
+                    <p>Aucun Film trouvé veuillez ajuster vos critères</p>
+                </ng-template>
+            </div>
+        </div>
     </div>
-</div>
 </div>

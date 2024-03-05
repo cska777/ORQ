@@ -15,6 +15,9 @@ class Watchlist(models.Model):
     type = models.CharField(max_length = 255, default="")
     duree = models.IntegerField(default=0)
     date_sortie = models.IntegerField(default=0)
+    synopsis = models.CharField(max_length = 3000, null = True)
+    genres = models.CharField(max_length = 255, null=True)
+    press_score = models.IntegerField(default = 0)
     
     class Meta:
         app_label = 'watchlist'

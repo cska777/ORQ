@@ -1,0 +1,36 @@
+<section class="container">
+    <div id="leftDiv" [style.background-image]="'url(' + oeuvre.illustration + ')'"></div>
+
+    <div id="rightDiv">
+        <h3>{{ oeuvre.titre }}</h3>
+        <div id="infoUn">
+            <ng-container *ngIf="oeuvre.type==='serie'; else film">
+                <p>{{oeuvre.duree}} min </p>
+            </ng-container>
+            <ng-template #film>
+                <p>{{oeuvre.duree}}</p>
+            </ng-template>
+            <p>{{ oeuvre.genres }}</p>
+            <p>{{ oeuvre.date_sortie }}</p>
+            <ng-container *ngIf="oeuvre.press_score === 1">
+                <p><i class="fa-solid fa-star"></i></p>
+            </ng-container>
+            <ng-container *ngIf="oeuvre.press_score === 2">
+                <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+            </ng-container>
+            <ng-container *ngIf="oeuvre.press_score === 3">
+                <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+            </ng-container>
+            <ng-container *ngIf="oeuvre.press_score === 4">
+                <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+            </ng-container>
+            <ng-container *ngIf="oeuvre.press_score === 5">
+                <p><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+            </ng-container>
+        </div>
+        <div id="synopsis">
+            <p>{{oeuvre.synopsis }}</p>
+        </div>
+    </div>
+
+</section>

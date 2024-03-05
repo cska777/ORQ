@@ -71,26 +71,27 @@ def update_user(request):
         return Response("Méthode non autorisée", status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-@api_view(['POST'])
+@api_view(['POST','OPTIONS'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def change_password(request):
-    user = request.user
-    data = request.data
+    if request.method == "POST" or request.method == 'OPTIONS':
+        user = request.user
+        data = request.data
 
-    old_password = data.get('old_password')
-    new_password = data.get('new_password')
+        old_password = data.get('old_password')
+        new_password = data.get('new_password')
 
-    if not old_password or new_password:
-        return Response("Ancien et nouveau mot de passe requis",status=status.HTTP_400_BAD_REQUEST)
-    
-    if not user.check_password(old_password):
-        return Response("Ancien mot de passe incorrect", status=status.HTTP_400_BAD_REQUEST)
-    
-    user.set_password(new_password)
-    user.save()
+        if not old_password or not new_password:
+            return Response("Ancien et nouveau mot de passe requis",status=status.HTTP_400_BAD_REQUEST)
+        
+        if not user.check_password(old_password):
+            return Response("Ancien mot de passe incorrect", status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(new_password)
+        user.save()
 
-    return Response("Mot de passe modifié avec succès", status=status.HTTP_200_OK)
+        return Response("Mot de passe modifié avec succès", status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
@@ -111,6 +112,9 @@ def watchlist(request):
         type = request.data.get('type')
         duree = request.data.get('duree')
         date_sortie = request.data.get('date_sortie')
+        synopsis = request.data.get('synopsis')
+        genres = request.data.get('genres')
+        press_score = request.data.get('press_score')
 
 
         # Vérifier si les données requises sont présentes
@@ -132,7 +136,10 @@ def watchlist(request):
             illustration = illustration,
             type = type,
             duree = duree,
-            date_sortie = date_sortie
+            date_sortie = date_sortie,
+            synopsis = synopsis,
+            genres = genres,
+            press_score = press_score
         )
         return Response("Série ajoutée avec succès à la watchlist", status=status.HTTP_201_CREATED)
     elif request.method == 'GET':

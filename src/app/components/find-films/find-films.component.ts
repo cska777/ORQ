@@ -33,6 +33,7 @@ type TrancheDuree = {
   styleUrl: './find-films.component.css'
 })
 export class FindFilmsComponent {
+  isLoading : boolean = true //Variable pour afficher le loader
   userInfo: any
   watchlist: any[] = []
   infini: number = Infinity
@@ -69,12 +70,18 @@ export class FindFilmsComponent {
   }
 
   ngOnInit(): void {
+    // Affecte une fonction au chargement de la page
+    window.onload = () =>{
+      // Quand le chargement est terminé je fais disparaitre l'animation de chargement
+      this.isLoading = false
+    }
     // Récupère la bdd des films et je la stock dans la variable films
     this.http.get('http://localhost:8000/films/').subscribe({
       next: (response: any) => {
         this.films = response
         console.log("Films récupérés avec succès :", this.films)
         this.extraireGenresUnique()
+        this.isLoading = false
       },
       error: (error: any) => {
         console.error("Erreur lors de la récupération des films", error)
