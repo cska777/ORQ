@@ -1,13 +1,24 @@
-<h1>INSCRIPTION</h1>
-<div *ngIf="errors.length > 0">
-    <ul>
-        <li *ngFor="let error of errors">{{error}}</li>
-    </ul>
-</div>
-<form (ngSubmit)="onSubmit()">
-    <input type="text" name="username" [(ngModel)]="userData.username" placeholder="Nom d'utilisateur">
-    <input type="email" name="email" [(ngModel)]="userData.email" placeholder="Email">
-    <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Mot de passe">
-    <input type="password" name="password" [(ngModel)]="userData.passwordConfirm" placeholder="Confirmer votre mot de passe">
-    <button type="submit">Inscription</button>
-</form> 
+<main>
+    <div id="corps">
+        <div class="titre">
+            <h1>INSCRIPTION</h1>
+        </div>
+
+        <div *ngIf="errors.length > 0">
+            <ul>
+                <li *ngFor="let error of errors">{{error}}</li>
+            </ul>
+        </div>
+
+        <form (ngSubmit)="onSubmit()">
+            <input type="text" name="username" [(ngModel)]="userData.username" placeholder="Nom d'utilisateur">
+            <input type="email" name="email" [(ngModel)]="userData.email" placeholder="Email">
+            <input type="password" name="password" [(ngModel)]="userData.password" placeholder="Mot de passe">
+            <input type="password" name="password" [(ngModel)]="userData.passwordConfirm"
+                placeholder="Confirmer votre mot de passe">
+                
+            <button type="submit">Inscription</button>
+        </form>
+
+    </div>
+</main>

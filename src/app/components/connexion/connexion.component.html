@@ -1,13 +1,23 @@
-<h2>Connexion</h2>
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-<form (submit)="onSubmit($event)">
-  <div>
-    <label>Nom d'utilisateur:</label>
-    <input type="text" name="username" [(ngModel)]="username" required>
+<main>
+
+  <div id="corps">
+    <div class="titre">
+      <h2>CONNEXION</h2>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <form (submit)="onSubmit($event)">
+      <div class="user_name">
+        <input type="text" name="username" placeholder="Nom d'utilisateur" [(ngModel)]="username" required>
+      </div>
+
+      <div class="user_password">
+        <input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="password" required>
+      </div>
+      
+      <button type="submit">Se connecter</button>
+    </form>
+
   </div>
-  <div>
-    <label>Mot de passe:</label>
-    <input type="password" name="password" [(ngModel)]="password" required>
-  </div>
-  <button type="submit">Se connecter</button>
-</form>
+</main>

@@ -154,6 +154,7 @@ export class WatchlistComponent implements OnInit {
 
   currentIndex = 0;
 
+
   generateSections(watchlist: any[],status: string): any[][] {
     if (!watchlist) {
       return [];

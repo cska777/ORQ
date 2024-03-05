@@ -16,10 +16,10 @@
 
     <li class="nav-item dropdown d-flex align-content-center">
         <a *ngIf="isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        ICONE {{userInfo.username}}
+        {{userInfo.username}}
         </a>
         <a *ngIf="!isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        ICONE
+        Se connecter
         </a>
         <ul class="dropdown-menu">
             <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/connexion">Connexion </li>

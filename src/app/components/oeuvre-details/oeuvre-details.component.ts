@@ -14,9 +14,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class OeuvreDetailsComponent {
   oeuvre : any
+  
   constructor(public dialogRef:MatDialogRef<OeuvreDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data:any){
     this.oeuvre = data.oeuvre
     console.log(this.oeuvre.genres)
   }
 
+  getGenresAsString(genres: string[]): string {
+    return genres.join(', ');
+  }
 }
