@@ -35,7 +35,7 @@ def signup(request):
 
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, username=request.data['username'])
+    user = get_object_or_404(User, email=request.data['email'])
     if not user.check_password(request.data['password']):
         return Response("Utilisateur introuvable", status=status.HTTP_404_NOT_FOUND )
     token, created  = Token.objects.get_or_create(user=user)
@@ -72,6 +72,22 @@ def update_user(request):
 
 
 @api_view(['POST','OPTIONS'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def check_password(request):
+    user = request.user
+    old_password = request.data.get('old_password')
+
+    if not old_password:
+        return Response("Ancien mot de passe requis", status=status.HTTP_400_BAD_REQUEST)
+
+    if not user.check_password(old_password):
+        return Response({"valid": False})
+
+    return Response({"valid": True})
+
+
+@api_view(['POST','OPTIONS'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def change_password(request):
@@ -79,11 +95,12 @@ def change_password(request):
         user = request.user
         data = request.data
 
-        old_password = data.get('old_password')
-        new_password = data.get('new_password')
+        old_password = request.data.get('old_password', None)
+        new_password = request.data.get('new_password', None)
 
-        if not old_password or not new_password:
+        if old_password is None or new_password is None:
             return Response("Ancien et nouveau mot de passe requis",status=status.HTTP_400_BAD_REQUEST)
+
         
         if not user.check_password(old_password):
             return Response("Ancien mot de passe incorrect", status=status.HTTP_400_BAD_REQUEST)

@@ -395,7 +395,7 @@ export class FindSeriesComponent {
       duree: selectedSerie.duree_moyenne_episode,
       date_sortie: selectedSerie.date_de_sortie,
       synopsis : selectedSerie.synopsis,
-      genres : selectedSerie.genres,
+      genres : selectedSerie.genres.join(', '),
       press_score : selectedSerie.press_score
     };
 
@@ -479,7 +479,7 @@ export class FindSeriesComponent {
       duree: selectedSerie.duree_moyenne_episode,
       date_sortie: selectedSerie.date_de_sortie,
       synopsis : selectedSerie.synopsis,
-      genres : selectedSerie.genres,
+      genres : selectedSerie.genres.join(', '),
       press_score : selectedSerie.press_score
     }
 

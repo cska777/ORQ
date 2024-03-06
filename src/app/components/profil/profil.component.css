@@ -1,0 +1,392 @@
+::ng-deep main {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    background-color: black;
+}
+
+.h2Username{
+    color:white;
+    margin-top: 5%;
+}
+
+/* Username Field */
+
+.form__groupUsername{
+    position: relative;
+    padding: 10px 0 0;
+    margin-top: 2%;
+    width: 50%;
+}
+.form__fieldUsername{
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+.form__fieldUsername::placeholder {
+    color: transparent;
+}
+.form__fieldUsername:placeholder-shown ~ .form__labelUsername {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+.form__labelUsername {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+.form__fieldUsername:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #FFC800, #d39607);
+    border-image-slice: 1;
+}
+.form__fieldUsername:focus ~ .form__labelUsername {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #FFC800;
+    font-weight: 700;
+}
+/* reset input */
+.form__fieldUsername:required, .form__fieldUsername:invalid {
+    box-shadow: none;
+}
+
+/* Bouton de mise à jour */
+
+#btnUsername {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-top: 10%;
+    width: 30%;
+    font-size: 15px;
+  }
+  
+  #btnUsername:before {
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-btnUsername 50s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+  
+  @keyframes glowing-btnUsername {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  #btnUsername:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+/* Mot de passe form */
+
+.h2Pwd{
+    margin-top: 10%;
+    color: white;
+}
+
+/* Ancien mot de passe */
+
+.form__groupOldPwd{
+    position: relative;
+    padding: 10px 0 0;
+    margin-top: 2%;
+    width: 50%;
+}
+.form__fieldOldPwd{
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+.form__fieldOldPwd::placeholder {
+    color: transparent;
+}
+.form__fieldOldPwd:placeholder-shown ~ .form__labelOldPwd {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+.form__labelOldPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+.form__fieldOldPwd:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #FFC800, #d39607);
+    border-image-slice: 1;
+}
+.form__fieldOldPwd:focus ~ .form__labelOldPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #FFC800;
+    font-weight: 700;
+}
+/* reset input */
+.form__fieldOldwPwd:required, .form__fieldOldPwd:invalid {
+    box-shadow: none;
+}
+
+/* Nouveau mot de passe */
+
+.divNewPwd{
+    margin-top: 10%;
+}
+
+.form__fieldNewPwd{
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+.form__fieldNewPwd::placeholder {
+    color: transparent;
+}
+.form__fieldNewPwd:placeholder-shown ~ .form__labelNewPwd {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+.form__labelNewPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+.form__fieldNewPwd:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #FFC800, #d39607);
+    border-image-slice: 1;
+}
+.form__fieldNewPwd:focus ~ .form__labelNewPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #FFC800;
+    font-weight: 700;
+}
+/* reset input */
+.form__fieldNewPwd:required, .form__fieldNewPwd:invalid {
+    box-shadow: none;
+}
+
+/* Confirmation de mot de passe */
+
+.divConfirmPwd{
+    margin-top: 10%;
+}
+
+.form__fieldConfirmPwd{
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+.form__fieldConfirmPwd::placeholder {
+    color: transparent;
+}
+.form__fieldConfirmPwd:placeholder-shown ~ .form__labelConfirmPwd {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+.form__labelConfirmPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+.form__fieldConfirmPwd:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #FFC800, #d39607);
+    border-image-slice: 1;
+}
+.form__fieldConfirmPwd:focus ~ .form__labelConfirmPwd {
+    position: relative;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #FFC800;
+    font-weight: 700;
+}
+/* reset input */
+.form__fieldConfirmPwd:required, .form__fieldConfirmPwd:invalid {
+    box-shadow: none;
+}
+
+/* Bouton de mise à jour */
+
+#btnPwd {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-top: 10%;
+  width: 30%;
+  font-size: 15px;
+}
+
+#btnPwd:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-btnPwd 50s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-btnPwd {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+#btnPwd:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.btnPwdDiv{
+    margin-top: 5%;
+    margin-bottom: 15%;
+}

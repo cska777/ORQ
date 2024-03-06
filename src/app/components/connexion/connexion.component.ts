@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './connexion.component.css'
 })
 export class ConnexionComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
   errorMessage: string = '';
 
@@ -29,8 +29,8 @@ export class ConnexionComponent {
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    if (this.username && this.password) {
-      this.login(this.username, this.password).subscribe({
+    if (this.email && this.password) {
+      this.login(this.email, this.password).subscribe({
         next: (response: any) => {
           console.log('Connexion réussie', response);
           if (response && response.token && response.user) {
@@ -60,14 +60,14 @@ export class ConnexionComponent {
     }
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<any> {
     const loginUrl = 'http://localhost:8000/login/';
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<any>(loginUrl, { username, password }, { headers });
+    return this.http.post<any>(loginUrl, { email, password }, { headers });
   }
 
   getLoggedInUserInfo() {
