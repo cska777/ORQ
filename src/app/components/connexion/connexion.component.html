@@ -1,1 +1,23 @@
-<p>connexion works!</p>
+<main>
+
+  <div id="corps">
+    <div class="titre">
+      <h2>CONNEXION</h2>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <form (submit)="onSubmit($event)">
+      <div class="user_name">
+        <input type="text" name="email" placeholder="Adresse email" [(ngModel)]="email" required>
+      </div>
+
+      <div class="user_password">
+        <input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="password" required>
+      </div>
+      
+      <button type="submit">Se connecter</button>
+    </form>
+
+  </div>
+</main>

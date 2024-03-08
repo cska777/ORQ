@@ -1,0 +1,62 @@
+section.container {
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    z-index: 1000;
+  }
+  
+
+.container {
+    background-color: black;
+    display: flex;
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: auto;
+}
+
+h3 {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 3%;
+}
+
+#leftDiv {
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40%;
+    height: auto;
+}
+
+#rightDiv {
+    width: 58%;
+    height: auto;
+    margin-right: 2%;
+}
+
+#infoUn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10%;
+    padding: 0 10% 0 10%;
+}
+
+#infoDeux{
+    margin-top: 3%;
+}
+
+#synopsis {
+    margin-top: 7%;
+}
+
+.fa-star{
+    color: #FFC800;
+}

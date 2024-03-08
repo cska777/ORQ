@@ -1,1 +1,32 @@
-<p>navbar works!</p>
+
+<nav>
+    <li class="nav-item dropdown d-flex align-content-center">
+        <a class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            On regarde quoi ?
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/findFilms">Trouver un film</a></li>
+            <li><a class="dropdown-item" routerLink="/findSeries">Trouver une série</a></li>
+        </ul>
+    </li>
+
+    <div id="nav-logo">
+        <a routerLink="/"><img src="../assets/image/logo_white.png" alt="logo" height="200px"></a>
+    </div>
+
+    <li class="nav-item dropdown d-flex align-content-center">
+        <a *ngIf="isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Holder {{userInfo.username}}
+        </a>
+        <a *ngIf="!isUserLoggedIn" class="nav-link custom-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Se connecter
+        </a>
+        <ul class="dropdown-menu">
+            <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/connexion">Connexion </li>
+            <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/inscription">Inscription</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/watchlist">Ma watchlist</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/profil">Voir mon profil</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" (click)="onLogout()">Deconnexion</li>
+        </ul>
+    </li>
+</nav>

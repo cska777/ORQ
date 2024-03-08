@@ -1,0 +1,38 @@
+<h2 class="text-center h2Username">Modifier le nom d'utilisateur</h2>
+<!-- Gestion erreurs -->
+<p *ngIf="errorMessage">{{ errorMessage }}</p>
+<!-- --------------- -->
+<form id="formUser" class="form__groupUsername field mx-auto">
+  <div class="d-flex justify-content-center">
+    <input type="text" [(ngModel)]="newUsername" name="newUsername" placeholder="{{ userInfo.username}}"
+      class="form__fieldUsername">
+    <label for="username" class="form__labelUsername">Nom d'utilisateur</label>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button (click)="updateUsername(newUsername)" id="btnUsername">Mettre à jour</button>
+  </div>
+</form>
+
+<h2 class="text-center h2Pwd">Modifier le mot de passe</h2>
+<!-- Gestion erreurs -->
+<p *ngIf="errorMessageMdp">{{ errorMessageMdp }}</p>
+<!-- -------------- -->
+<form id="formMdp" class="form__groupOldPwd field mx-auto">
+  <div class="divOldPwd">
+    <input type="password" [(ngModel)]="oldPassword" name="oldPassword" placeholder="Mot de passe actuel" class="form__fieldOldPwd">
+    <label for="oldPassword" class="form__labelOldPwd">Mot de passe actuel</label>
+  </div>
+
+  <div class="divNewPwd">
+    <input type="password" [(ngModel)]="newPassword" name="newPassword" placeholder="Nouveau mot de passe" class="form__fieldNewPwd">
+    <label for="newPassword" class="form__labelNewPwd">Nouveau mot de passe</label>
+  </div>
+
+  <div class="divConfirmPwd">
+    <input type="password" [(ngModel)]="confirmNewPassword" name="confirmNew--Password" placeholder="Confirmer le nouveau mot de passe" class="form__fieldConfirmPwd">
+    <label for="confirmNewPassword" class="form__labelConfirmPwd">Confirmer le nouveau mot de passe</label>
+  </div>
+  <div class="d-flex justify-content-center btnPwdDiv">
+    <button (click)="changePassword(newPassword, oldPassword)" id="btnPwd">Mettre à jour</button>
+  </div>
+</form>

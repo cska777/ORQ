@@ -1,7 +1,8 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,50 +10,46 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgFor,
+    NgIf,
+    NgClass
   ],
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.css'
 })
 export class InscriptionComponent {
-  userData : any = {}
+  userData: any = {};
+  errors: string[] = [];
+  success: string[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   onSubmit(): void {
-    // Deboggage des valeurs des champs juste avant l'envoi à l'API Django
-    console.log('Valeur du champ username:', this.userData.username);
-    console.log('Valeur du champ email:', this.userData.email);
-    console.log('Valeur du champ password:', this.userData.password);
-    console.log('Valeur du champ firstname:', this.userData.first_name);
-    console.log('Valeur du champ lastname:', this.userData.last_name);
-
-    // Vérifier si les champs requis sont renseignés
-    if (this.userData.username && this.userData.email && this.userData.password) {
-      // Définir l'URL de l'API à laquelle envoyer les données
-      const apiUrl = 'http://localhost:8000/api/v1/users/';
-
-      // Utiliser HTTPClient pour envoyer une requête POST avec les données utilisateur
-      this.http.post(apiUrl, this.userData).subscribe({
+    this.errors = [];
+    if (this.userData.username && this.userData.email && this.userData.password && this.userData.passwordConfirm && this.userData.password === this.userData.passwordConfirm) {
+      const apiUrl = 'http://localhost:8000/signup/';
+      this.http.post<any>(apiUrl, this.userData).subscribe({
         next: (response: any) => {
           console.log("Enregistrement effectué avec succès", response);
-          // Réinitialiser les champs du formulaire après l'enregistrement réussi
-          this.userData = {
-            username: '',
-            email: '',
-            password: '',
-            first_name: '',
-            last_name: '',
-            
-          };
-      
+          this.success.push("Compte créé avec succès", response.message);
+          this.router.navigate(['/connexion']);
         },
         error: (error: any) => {
           console.error("Échec de l'enregistrement", error);
+          this.errors.push("Échec lors de l'enregistrement : ", error.message);
         }
       });
     } else {
       console.error("Veuillez remplir tous les champs obligatoires.");
+      this.errors.push("Veuillez remplir tous les champs obligatoires");
     }
   }
+  ngOnInit(): void{
+    const token = localStorage.getItem("token")
+    if(token){
+      this.router.navigate(['/'])
+    }
+  }
+  
 }

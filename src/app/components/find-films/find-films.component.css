@@ -1,0 +1,212 @@
+* {
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    padding: 1%;
+    color: black;
+}
+
+.corps2 {
+    border-radius: 5%;
+    padding: 1%;
+}
+
+#seriesCard {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    text-align: center;
+    border-radius: 5%;
+    --c: #FFC800;
+    /* the border color */
+    --b: 5px;
+    /* the border thickness*/
+    --g: 5px;
+    /* the gap on hover */
+
+    padding: calc(var(--g) + var(--b));
+    --_g: #FFC800 25%, var(--c) 0;
+    background:
+        conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) var(--_i, 200%) 0 /200% var(--_i, var(--b)) no-repeat,
+
+        conic-gradient(at bottom var(--b) left var(--b), var(--_g)) 0 var(--_i, 200%)/var(--_i, var(--b)) 200% no-repeat #252525;
+    transition: .3s, background-position .3s .3s;
+    color: white;
+    border: none;
+}
+
+#seriesCard:hover {
+    --_i: 100%;
+    transition: .3s, background-size .3s .3s;
+    color: black;
+}
+
+.selected {
+    border: 5px solid #FFC800 !important;
+    transform: scale(1.1);
+}
+
+#noIllu {
+    width: 30%;
+}
+
+.genre-image {
+    border-radius: 5%;
+}
+
+
+.btnNext {
+    padding: 5px 10px;
+    border: none;
+    background-image: linear-gradient(to right, #4b4b4b 0%, rgb(17, 17, 17) 100%);
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #4b4b4b7f;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+    margin-bottom: 3%;
+}
+
+.btnNext:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #4b4b4b7f;
+}
+
+.btnPrevious {
+    padding: 5px 10px;
+    border: none;
+    background: linear-gradient(to right, rgba(255, 143, 143, 1) 0%, rgba(255, 0, 0, 1) 50%);
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #4b4b4b7f;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+    margin-right: 20px;
+}
+
+.btnPrevious:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #ff0000;
+}
+
+
+.btnStar {
+    padding: 5px 10px;
+    border: 2px solid #FFC800;
+    background-image: linear-gradient(to right, #4b4b4b 0%, rgb(17, 17, 17) 100%);
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #4b4b4b7f;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+    margin: 0 5px;
+}
+
+.btnStar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #4b4b4b7f;
+}
+
+
+/* ------ Division serie aléatoire ------ */
+
+.serieAleatoire {
+    margin-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    background: #eeeeee;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    padding: 20px;
+}
+
+.serieAleatoire h2,
+p,
+strong {
+    color: black;
+}
+
+.serieAleatoire-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.serieAleatoire-btn button {
+    font-size: 50px;
+    background: transparent;
+    border: none;
+    color: black;
+    margin-bottom: 15px
+}
+
+.serieAleatoire-btn button:hover {
+    color: #4cd3c2;
+}
+
+.span {
+    color: black;
+    font-size: 15px;
+}
+
+
+.serie-proposer {
+    display: flex;
+}
+
+
+
+
+.div-infoSerie {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 30px;
+}
+
+.synopsis {
+    text-align: start;
+}
+
+/* ANIMATION DE CHARGEMENT */
+
+.container{
+    min-height: 100vh;
+}
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: rotate(45deg);
+    overflow: hidden;
+  }
+  .loader:after{
+    content: '';
+    position: absolute;
+    inset: 8px;
+    margin: auto;
+    background: #000000;
+  }
+  .loader:before{
+    content: '';
+    position: absolute;
+    inset: -15px;
+    margin: auto;
+    background: #FFC800;
+    animation: diamondLoader 2s linear infinite;
+  }
+  @keyframes diamondLoader {
+    0%  ,10% {
+      transform: translate(-64px , -64px) rotate(-45deg)
+    }
+    90% , 100% {
+      transform: translate(0px , 0px) rotate(-45deg)
+    }
+  }
+
