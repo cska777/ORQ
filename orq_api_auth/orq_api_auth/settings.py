@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from celery.schedules import crontab
+import orq_api_auth.tasks
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -150,4 +153,30 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
 ]
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = os.environ.get('DJANGO_TIMEZONE', 'UTC')
+CELERY_BEAT_SCHEDULE = {
+    'scrape_allocine_every_wednesday': {
+        'task': 'orq_api_auth.tasks.scrape_allocine_task',
+        'schedule': crontab(day_of_week='wed', hour=0, minute=0),
+    },
+}
+
+# Use Redis as the message broker
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# Use Redis as the result backend
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# Enable Celery to accept tasks from remote workers
+CELERY_ACCEPT_CONTENT = ['json']
+
+# Enable Celery to serialize task results using JSON
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 

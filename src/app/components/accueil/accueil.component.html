@@ -1,0 +1,48 @@
+<h1 class="text-center my-5">Au cinéma en ce moment </h1>
+<div class="main-container my-3">
+    <div class="carousel">
+        <ng-container *ngFor="let films of filmsCinema">
+            <div class="item">
+                <div class="container">
+                    <div class="cellphone-container">
+                        <div class="movie">
+                            <div class="movie-img" style="background-image: url({{films.illustration_url}});"></div>
+                            <div class="text-movie-cont">
+                                <div class="mr-grid">
+                                    <div class="col1">
+                                        <h2>{{films.titre}}</h2>
+                                        <ul class="movie-gen">
+                                            <li>Date de sortie : {{films.date_de_sortie}}</li>
+                                            <li>{{films.duree_originale}}</li>
+                                            <li>{{films.genres}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="mr-grid summary-row">
+                                        <div class="col2">
+                                            <h5>Synopsis</h5>
+                                        </div>
+                                    </div>
+                                    <div class="mr-grid">
+                                        <div class="col1">
+                                            <p class="movie-description">{{films.synopsis}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="mr-grid actors-row">
+                                        <div class="col1">
+                                            <p class="movie-actors"><strong>Acteurs : </strong>{{films.acteurs}}</p>
+                                            <p class="movie-creators"><strong>Réalisateur(s) : </strong>{{films.createurs}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+</div>
+

@@ -25,7 +25,7 @@
             <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/connexion">Connexion </li>
             <li *ngIf="!isUserLoggedIn" class="dropdown-item" routerLink="/inscription">Inscription</li>
             <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/watchlist">Ma watchlist</li>
-            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/profil">Voir mon profil</li>
+            <li *ngIf="isUserLoggedIn" class="dropdown-item" routerLink="/profil">Gérer mon profil</li>
             <li *ngIf="isUserLoggedIn" class="dropdown-item" (click)="onLogout()">Deconnexion</li>
         </ul>
     </li>
