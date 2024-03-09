@@ -9,15 +9,17 @@
 .h2Username{
     color:white;
     margin-top: 5%;
+    font-size: 25px;
+    margin-bottom: 5%;
 }
 
 /* Username Field */
 
 .form__groupUsername{
     position: relative;
-    padding: 10px 0 0;
+    padding: 5px 0 0;
     margin-top: 2%;
-    width: 50%;
+    width: 35%;
 }
 .form__fieldUsername{
     font-family: inherit;
@@ -25,9 +27,9 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 1.3rem;
+    font-size: 15px;
     color: #fff;
-    padding: 7px 0;
+    padding: 25px 0 10px 0;
     background: transparent;
     transition: border-color 0.2s;
 }
@@ -35,7 +37,7 @@
     color: transparent;
 }
 .form__fieldUsername:placeholder-shown ~ .form__labelUsername {
-    font-size: 1.3rem;
+    font-size: 15px;
     cursor: text;
     top: 20px;
 }
@@ -44,7 +46,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #9b9b9b;
 }
 .form__fieldUsername:focus {
@@ -59,7 +61,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #FFC800;
     font-weight: 700;
 }
@@ -84,7 +86,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     margin-top: 10%;
-    width: 30%;
+    width: 40%;
     font-size: 15px;
   }
   
@@ -143,17 +145,19 @@
 /* Mot de passe form */
 
 .h2Pwd{
+    color:white;
     margin-top: 10%;
-    color: white;
+    font-size: 25px;
+    margin-bottom: 3%;
 }
 
 /* Ancien mot de passe */
 
 .form__groupOldPwd{
     position: relative;
-    padding: 10px 0 0;
+    padding: 5px 0 0;
     margin-top: 2%;
-    width: 50%;
+    width: 35%;
 }
 .form__fieldOldPwd{
     font-family: inherit;
@@ -161,7 +165,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 1.3rem;
+    font-size: 10px;
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -171,7 +175,7 @@
     color: transparent;
 }
 .form__fieldOldPwd:placeholder-shown ~ .form__labelOldPwd {
-    font-size: 1.3rem;
+    font-size: 15px;
     cursor: text;
     top: 20px;
 }
@@ -180,7 +184,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #9b9b9b;
 }
 .form__fieldOldPwd:focus {
@@ -195,7 +199,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #FFC800;
     font-weight: 700;
 }
@@ -216,7 +220,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 1.3rem;
+    font-size: 10px;
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -226,7 +230,7 @@
     color: transparent;
 }
 .form__fieldNewPwd:placeholder-shown ~ .form__labelNewPwd {
-    font-size: 1.3rem;
+    font-size: 15px;
     cursor: text;
     top: 20px;
 }
@@ -235,7 +239,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #9b9b9b;
 }
 .form__fieldNewPwd:focus {
@@ -271,7 +275,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 1.3rem;
+    font-size: 10px;
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -281,7 +285,7 @@
     color: transparent;
 }
 .form__fieldConfirmPwd:placeholder-shown ~ .form__labelConfirmPwd {
-    font-size: 1.3rem;
+    font-size: 15px;
     cursor: text;
     top: 20px;
 }
@@ -290,7 +294,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #9b9b9b;
 }
 .form__fieldConfirmPwd:focus {
@@ -305,7 +309,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 15px;
     color: #FFC800;
     font-weight: 700;
 }
@@ -330,7 +334,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   margin-top: 10%;
-  width: 30%;
+  width: 40%;
   font-size: 15px;
 }
 

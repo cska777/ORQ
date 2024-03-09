@@ -68,6 +68,10 @@ export class ProfilComponent implements OnInit {
   }
 
   changePassword(newPassword: string, oldPassword: string): void {
+    if(newPassword.length < 8){
+      this.errorMessageMdp = "Le mot de passe doit contenir au moins 8 carractères"
+      return
+    }
     if (newPassword !== this.confirmNewPassword) {
       this.errorMessageMdp = "Les mots de ne correspondent pas"
       return

@@ -1,7 +1,8 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import jsonData from '../../data/allocine_cinema.json'
 
 @Injectable({
   providedIn : 'root'
@@ -13,14 +14,15 @@ import { RouterLink } from '@angular/router';
   imports: [
     HttpClientModule,
     NgIf,
-    RouterLink
+    RouterLink,
+    NgFor
   ],
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.css'
 })
 export class AccueilComponent {
   userInfo: any
-  
+  filmsCinema : any = jsonData
 
   constructor() { }
 
