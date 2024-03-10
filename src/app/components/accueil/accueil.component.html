@@ -1,4 +1,4 @@
-<h1 class="text-center my-5">Au cinéma en ce moment </h1>
+<h1 class="text-center my-5">OnRegardeQuoi <span class="span_titre">AU CINÉMA</span> </h1>
 <div class="main-container my-3">
     <div class="carousel">
         <ng-container *ngFor="let films of filmsCinema">
@@ -10,7 +10,7 @@
                             <div class="text-movie-cont">
                                 <div class="mr-grid">
                                     <div class="col1">
-                                        <h2>{{films.titre}}</h2>
+                                        <h2 class="text-center">{{films.titre}}</h2>
                                         <ul class="movie-gen">
                                             <li>Date de sortie : {{films.date_de_sortie}}</li>
                                             <li>{{films.duree_originale}}</li>

@@ -1,24 +1,34 @@
-.main-container{
+::ng-deep main {
+    background-color: black;
+}
+
+.main-container {
     width: 100%;
-    display:block;
-    overflow:hidden;
-  }
-  .carousel{
-    display:block;
+    display: block;
+    overflow: hidden;
+}
+
+/* Carousel style */
+.carousel {
+    display: block;
     width: 100%;
     height: 750px;
     overflow-y: scroll;
     margin: 0;
     white-space: nowrap;
-  }
-  .item {
-      display: inline-block;
-      width: 375px;
-      margin: 0 10px;
-      height: 100%;
-      position:relative;
-      border-radius: 20px;
-  }
+}
+
+.item {
+    display: inline-block;
+    width: 375px;
+    margin: 0 10px;
+    height: 100%;
+    position: relative;
+    border-radius: 20px;
+}
+
+/* Cards style */
+
 .container {
     width: 100%;
     height: 100%;
@@ -29,7 +39,7 @@
     height: 100%;
     background-color: #000000;
     border-radius: 4px;
-    white-space:initial
+    white-space: initial
 }
 
 
@@ -92,6 +102,9 @@ h2 {
     font-weight: 400;
 }
 
+h1 {
+    color: white
+}
 
 h5 {
     font-size: 12px;
@@ -161,8 +174,7 @@ h5 {
     font-style: italic;
 }
 
-/* TYPOGRAPHY ENDS */
-/** GRID STARTS **/
+
 .thegrid {
     margin: 0 auto;
 }
@@ -259,6 +271,91 @@ h5 {
     border-radius: 50px;
 }
 
-.info-div{
+.info-div {
     overflow-y: scroll;
 }
+
+/* Style du H1 */
+
+.span_titre {
+    position: relative;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: calc(1.375rem + 1.5vw);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-shadow: 0 0 0.15em #1da9cc;
+    user-select: none;
+    white-space: nowrap;
+    filter: blur(0.007em);
+    animation: shake 2.5s linear forwards;
+  }
+  
+  .span_titre::before,
+  .span_titre::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .span_titre::before {
+    animation: crack1 2.5s linear forwards;
+    -webkit-clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+            clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+  }
+  
+  .span_titre::after {
+    animation: crack2 2.5s linear forwards;
+    -webkit-clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+            clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+  }
+  
+  @keyframes shake {
+    5%, 15%, 25%, 35%, 55%, 65%, 75%, 95% {
+      filter: blur(0.018em);
+      transform: translateY(0.018em) rotate(0deg);
+    }
+  
+    10%, 30%, 40%, 50%, 70%, 80%, 90% {
+      filter: blur(0.01em);
+      transform: translateY(-0.018em) rotate(0deg);
+    }
+  
+    20%, 60% {
+      filter: blur(0.03em);
+      transform: translate(-0.018em, 0.018em) rotate(0deg);
+    }
+  
+    45%, 85% {
+      filter: blur(0.03em);
+      transform: translate(0.018em, -0.018em) rotate(0deg);
+    }
+  
+    100% {
+      filter: blur(0.007em);
+      transform: translate(0) rotate(-0.5deg);
+    }
+  }
+  
+/*   @keyframes crack1 {
+    0%, 95% {
+      transform: translate(-50%, -50%);
+    }
+  
+    100% {
+      transform: translate(-51%, -48%);
+    }
+  }
+  
+  @keyframes crack2 {
+    0%, 95% {
+      transform: translate(-50%, -50%);
+    }
+  
+    100% {
+      transform: translate(-49%, -53%);
+    }
+  } */
+  

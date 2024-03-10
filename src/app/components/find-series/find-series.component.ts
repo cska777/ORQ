@@ -35,6 +35,7 @@ type TrancheDuree = {
 })
 export class FindSeriesComponent {
   isLoading : boolean = true //Variable pour afficher le loader
+  isUserLoggedIn : boolean = false
   userInfo: any
   watchlist: any[] = []
   isButtonDisabled: boolean = false
@@ -68,9 +69,11 @@ export class FindSeriesComponent {
       this.userInfo = JSON.parse(userString);
       this.initializeWatchlist()
       this.isLoading = false
+      this.isUserLoggedIn = true
     } else {
       console.log('Aucune information utilisateur trouvée.');
       this.isLoading = false
+      this.isUserLoggedIn = false
     }
   }
   onLogout(): void {
