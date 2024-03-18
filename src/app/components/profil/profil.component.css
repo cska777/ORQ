@@ -6,20 +6,34 @@
     background-color: black;
 }
 
+.container{
+    margin-top: 10%;
+}
+
 .h2Username{
     color:white;
-    margin-top: 5%;
     font-size: 25px;
-    margin-bottom: 5%;
 }
 
 /* Username Field */
+.cardUsername{
+    background-color: rgba(20, 20, 20, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    width: 40%;
+    height: 80%;
+    box-shadow: rgba(255, 255, 255, 0.07) 0px 1px 2px, rgba(253, 253, 253, 0.07) 0px 2px 4px, rgba(255, 255, 255, 0.07) 0px 4px 8px, rgba(255, 255, 255, 0.07) 0px 8px 16px, rgba(254, 254, 254, 0.07) 0px 16px 32px, rgba(255, 255, 255, 0.07) 0px 32px 64px;
+}
+
+.card-header{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    margin-bottom: 5%;
+}
 
 .form__groupUsername{
     position: relative;
     padding: 5px 0 0;
-    margin-top: 2%;
-    width: 35%;
+    margin-top: 20px;
+    width: 65%;
 }
 .form__fieldUsername{
     font-family: inherit;
@@ -86,7 +100,8 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     margin-top: 10%;
-    width: 40%;
+    margin-bottom: 10%;
+    width: 70%;
     font-size: 15px;
   }
   
@@ -94,15 +109,15 @@
     content: "";
     background: linear-gradient(
       45deg,
-      #ff0000,
-      #ff7300,
-      #fffb00,
-      #48ff00,
-      #00ffd5,
-      #002bff,
-      #7a00ff,
-      #ff00c8,
-      #ff0000
+      #FFC800,
+      #d39607,
+      #947d29,
+      #FFC800,
+      #d39607,
+      #947d29,
+      #FFC800,
+      #d39607,
+      #FFC800
     );
     position: absolute;
     top: -2px;
@@ -143,12 +158,18 @@
   }
 
 /* Mot de passe form */
+.cardPwd{
+    background-color: rgba(20, 20, 20, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    width: 45%;
+    margin-left: 5%;
+    box-shadow: rgba(255, 255, 255, 0.07) 0px 1px 2px, rgba(253, 253, 253, 0.07) 0px 2px 4px, rgba(255, 255, 255, 0.07) 0px 4px 8px, rgba(255, 255, 255, 0.07) 0px 8px 16px, rgba(254, 254, 254, 0.07) 0px 16px 32px, rgba(255, 255, 255, 0.07) 0px 32px 64px;
+}
+
 
 .h2Pwd{
     color:white;
-    margin-top: 10%;
     font-size: 25px;
-    margin-bottom: 3%;
 }
 
 /* Ancien mot de passe */
@@ -157,7 +178,7 @@
     position: relative;
     padding: 5px 0 0;
     margin-top: 2%;
-    width: 35%;
+    width: 65%;
 }
 .form__fieldOldPwd{
     font-family: inherit;
@@ -165,7 +186,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 10px;
+    font-size: 15px;
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -220,7 +241,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 10px;
+    font-size: 15px;
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -334,7 +355,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   margin-top: 10%;
-  width: 40%;
+  width: 70%;
   font-size: 15px;
 }
 
@@ -342,15 +363,15 @@
   content: "";
   background: linear-gradient(
     45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
+    #FFC800,
+    #d39607,
+    #947d29,
+    #FFC800,
+    #d39607,
+    #947d29,
+    #FFC800,
+    #d39607,
+    #FFC800
   );
   position: absolute;
   top: -2px;
@@ -394,3 +415,4 @@
     margin-top: 5%;
     margin-bottom: 15%;
 }
+
