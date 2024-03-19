@@ -1,85 +1,86 @@
+
 <h1>QUEL TYPE DE SERIE RECHERCHEZ VOUS ? </h1>
 
 <div class="corps2">
 
+<!-- Ici nous mettons en place la section qui permet de à l'utilisateur de choisir le type de série rechercher -->
     <div id="choixGenre" *ngIf="divVisible === 'choixGenre'" class="d-flex inline flex-wrap justify-content-center">
         <ng-container *ngFor="let genre of genresUnique">
 
             <button id="seriesCard" (click)="choisirGenre(genre)"
                 [ngClass]="{'selected' : choix_genre.includes(genre), 'unselected' : !choix_genre.includes(genre)}"
                 style="display: flex; flex-direction: column;">
-                <img [src]="'../assets/image/' + genre + '.jpeg'" alt="{{ genre }}" class="genre-image" width="220px">
+                <img [src]="'../assets/image/' + genre + '.jpeg'" alt="{{ genre }}" class="genre-image" width="145px">
                 {{genre}}
             </button>
-
-        </ng-container><br>
-        <ng-container *ngIf="choix_genre.length >= 1; else noScore">
-            <button class="btn btn-info mx-5 btnNext" (click)="suivant()"
-                style="position: fixed;  right: 20px; bottom: 160px;">Suivant</button>
         </ng-container>
-        <ng-template #noScore>
-            <button class="btn btn-info mx-5 disabled btnNext" (click)="suivant()"
-                style="position: fixed; right: 20px; bottom: 160px;">Suivant</button>
-        </ng-template>
+    
+        <div>
+            <ng-container *ngIf="choix_genre.length >= 1; else noScore">
+                <button class="btn btn-info mx-5 btnNext" (click)="suivant()" style="font-size: 20px; margin-top: 5px;">Suivant</button>
+            </ng-container>
+            <ng-template #noScore>
+                <button class="btn btn-info mx-5 disabled btnNext" (click)="suivant()" style="font-size: 20px; margin-top: 5px;">Suivant</button>
+            </ng-template>
+        </div>
     </div>
 
+<!-- Ici nous mettons en place la section qui permet de à l'utilisateur de choisir la durée de la série rechercher -->
     <div id="choixDuree" *ngIf="divVisible === 'choixDureeEp'">
         <button class="btn btnPrevious" (click)="retour()">Retour</button>
 
-        <button class="btn btn-annee" (click)="choisirTrancheDuree({ debut : 0, fin : 9})" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDuree({ debut : 0, fin : 9})" [ngClass]="{
         'selected' : isTrancheSelectedDuree({ debut : 0 , fin : 9}),
         'unselected' : !isTrancheSelectedDuree({ debut : 0 , fin : 9})
     }">
             moins de 10 min
         </button>
-        <button class="btn btn-annee" (click)="choisirTrancheDuree({ debut : 10, fin : 30})" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDuree({ debut : 10, fin : 30})" [ngClass]="{
         'selected' : isTrancheSelectedDuree({debut : 10, fin : 30}),
         'unselected' : !isTrancheSelectedDuree({debut : 10, fin : 30})
     }">
             Entre 10 et 30 min
         </button>
-        <button class="btn btn-annee" (click)="choisirTrancheDuree({ debut : 31, fin : infini })" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDuree({ debut : 31, fin : infini })" [ngClass]="{
         'selected' : isTrancheSelectedDuree({ debut : 31 , fin : infini}),
         'unselected' : !isTrancheSelectedDuree({ debut : 31 , fin : infini})
     }">
             plus à 30 min
         </button>
         <ng-container *ngIf="choix_dureeEp.length >= 1; else noDuree">
-            <button class="suivantBtn btn btn-info btnNext" style="margin-left: 10px;"
-                (click)="suivant()">Suivant</button>
+            <button class="suivantBtn btn btn-info btnNext" (click)="suivant()">Suivant</button>
         </ng-container>
         <ng-template #noDuree>
-            <button class="suivantBtn btn btn-info disabled btnNext" style="margin-left: 10px;"
-                (click)="suivant()">Suivant</button>
+            <button class="suivantBtn btn btn-info disabled btnNext" (click)="suivant()">Suivant</button>
         </ng-template>
     </div>
 
-
+<!-- Ici nous mettons en place la section qui permet de à l'utilisateur de choisir la date de sortie de la série rechercher -->
     <div id="dateSortie" *ngIf="divVisible === 'dateSortie'">
         <button class="suivantBtn btn btn-info btnPrevious" (click)="retour()">Retour</button>
 
-        <button class="btn btn-annee" (click)="choisirTrancheDate({ debut: 0, fin: 1970 })" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDate({ debut: 0, fin: 1970 })" [ngClass]="{
         'selected': isTrancheSelectedDate({ debut: 0, fin: 1970 }), 
         'unselected': !isTrancheSelectedDate({ debut: 0, fin: 1970 })
     }">
             Avant 1970
         </button>
 
-        <button class="btn btn-annee" (click)="choisirTrancheDate({ debut: 1971, fin: 1990 })" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDate({ debut: 1971, fin: 1990 })" [ngClass]="{
         'selected': isTrancheSelectedDate({ debut: 1971, fin: 1990 }), 
         'unselected': !isTrancheSelectedDate({ debut: 1971, fin: 1990 })
     }">
             1971-1990
         </button>
 
-        <button class="btn btn-annee" (click)="choisirTrancheDate({ debut: 1991, fin: 2010 })" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDate({ debut: 1991, fin: 2010 })" [ngClass]="{
         'selected': isTrancheSelectedDate({ debut: 1991, fin: 2010 }), 
         'unselected': !isTrancheSelectedDate({ debut: 1991, fin: 2010 })
     }">
             1991-2010
         </button>
 
-        <button class="btn btn-annee" (click)="choisirTrancheDate({ debut: 2011, fin: infini })" [ngClass]="{
+        <button class="btn btn-choix" (click)="choisirTrancheDate({ debut: 2011, fin: infini })" [ngClass]="{
         'selected': isTrancheSelectedDate({ debut: 2011, fin: infini }), 
         'unselected': !isTrancheSelectedDate({ debut: 2011, fin: infini })
     }">
@@ -95,34 +96,29 @@
         </ng-template>
     </div>
 
-    <!-- SECTION CHOIX SCORE -->
-    <div id="pressScore" *ngIf="divVisible === 'pressScore'">
+<!-- Ici nous mettons en place la section qui permet de à l'utilisateur de choisir la note critique de la série rechercher -->
+<div id="pressScore" *ngIf="divVisible === 'pressScore'">
         <button class="suivantBtn btn btn-info btnPrevious" (click)="retour()">Retour</button>
 
         <button class="btn btnStar" (click)="choisirScore(1)"
-            [ngClass]="{'selected' : choix_score.includes(1), 'unselected' : !choix_score.includes(1)}">
-            <img src="../../../assets/image/star-one.png" alt="note_d'une_étoile" height="100" width="150">
-        </button>
+            [ngClass]="{'selected' : choix_score.includes(1), 'unselected' : !choix_score.includes(1)}"> 
+            &#x2605; </button>
 
         <button class="btn btnStar" (click)="choisirScore(2)"
             [ngClass]="{'selected' : choix_score.includes(2), 'unselected' : !choix_score.includes(2)}">
-            <img src="../../../assets/image/star-two.png" alt="note_deux_étoiles" height="100" width="150">
-        </button>
+            &#x2605; &#x2605; </button>
 
         <button class="btn btnStar" (click)="choisirScore(3)"
             [ngClass]="{'selected' : choix_score.includes(3), 'unselected' : !choix_score.includes(3)}">
-            <img src="../../../assets/image/star-three.png" alt="note_trois_étoiles" height="100" width="150">
-        </button>
+            &#x2605;  &#x2605;  &#x2605;  </button>
 
         <button class="btn btnStar" (click)="choisirScore(4)"
             [ngClass]="{'selected' : choix_score.includes(4), 'unselected' : !choix_score.includes(4)}">
-            <img src="../../../assets/image/star-four.png" alt="note_quatre_étoiles" height="100" width="150">
-        </button>
+            &#x2605;  &#x2605;  &#x2605;  &#x2605;  </button>
 
         <button class="btn btnStar" (click)="choisirScore(5)"
             [ngClass]="{'selected' : choix_score.includes(5), 'unselected' : !choix_score.includes(5)}">
-            <img src="../../../assets/image/star-five.png" alt="note_cinq_étoiles" height="100" width="150">
-        </button>
+            &#x2605;  &#x2605;  &#x2605;  &#x2605;  &#x2605;  </button>
 
         <ng-container *ngIf="choix_score.length >= 1; else noScore">
             <button class="suivantBtn btn btn-info mx-5 btnNext" (click)="suivant()">Suivant</button>
@@ -178,12 +174,19 @@
         </ng-template>
     </div>
 
-    <div class="btn-series">
-        <button mat-button class="other-series" (click)="ajouterWatchList(selectedRandomSerie)">Ajouter à la
-            watchlist</button>
+    <ng-container *ngIf="isUserLoggedIn">
+        <div class="btn-series">
+            <button mat-button class="other-series" (click)="ajouterWatchList(selectedRandomSerie)">Ajouter à la
+                watchlist</button>
+            <button class="other-series" (click)="selectRandomSerie()"> Proposer une autre série </button>
+            <button mat-button class="btn btn-primary" (click)="dejaVu(selectedRandomSerie)">Déjà vu</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isUserLoggedIn">
+        <button routerLink="/connexion">Se connecter pour ajouter à la watchlist</button>
         <button class="other-series" (click)="selectRandomSerie()"> Proposer une autre série </button>
-        <button mat-button class="btn btn-primary" (click)="dejaVu(selectedRandomSerie)">Déjà vu</button>
-    </div>
+    </ng-container>
 </div>
 
 <div *ngIf="historique.length > 0 ">

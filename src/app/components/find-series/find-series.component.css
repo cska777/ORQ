@@ -5,25 +5,27 @@
 
 h1 {
     padding: 1%;
-    color: black;
+    color: white;
 }
 .corps2{
-    border-radius: 5%;
-    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Ici c'est la gestion du choix de genre de série  */
 #seriesCard {
     display: flex;
     justify-content: center;
     margin: 20px;
     text-align: center;
     border-radius: 5%;
-    --c: #FFC800; /* the border color */
+    --c: #ffc800ee; /* the border color */
     --b: 5px;    /* the border thickness*/
     --g: 5px;     /* the gap on hover */
     
     padding: calc(var(--g) + var(--b));
-    --_g: #FFC800 25%,var(--c) 0;
+    --_g: rgb(2,0,36) 25%,var(--c) 0;
     background: 
       conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
        var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
@@ -32,26 +34,39 @@ h1 {
        0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat #252525; 
     transition: .3s, background-position .3s .3s;
     color: white;
-    border: none;
+    border: 1px solid #ffc800d9;
 }
 
 #seriesCard:hover {
   --_i: 100%;
   transition: .3s, background-size .3s .3s;
-  color: black;
+  color: #ffc80091;
 }
 
-.selected {
-    border: 5px solid #FFC800 !important;
-    transform: scale(1.1);
+/* Ici je vais personalisé les bouton de section choix de durée d'une série */
+#choixDuree{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }
 
-#noIllu {
-    width: 30%;
+/* Ici je gère la gestion les bontons commun de la vue serie et  leur animation lors de la selection et du survol */
+.btnPrevious {
+    border: none;
+    background: linear-gradient(to right, rgba(255,143,143,1) 0%, rgba(255,0,0,1) 50%);
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #4b4b4b7f;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
 }
 
-.genre-image {
-    border-radius: 5%;
+.btnPrevious:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #ff0000;
 }
 
 .btnNext {
@@ -60,7 +75,6 @@ h1 {
     color: white;
     font-size: 0.9em;
     cursor: pointer;
-    box-shadow: 0 4px 15px #4b4b4b7f;
     transition: transform 0.2s, box-shadow 0.2s;
     border-radius: 3px;
 }
@@ -70,46 +84,24 @@ h1 {
     box-shadow: 0 7px 20px #4b4b4b7f;
 }
 
-.btnPrevious {
-    padding: 5px 10px;
-    border: none;
-    background: linear-gradient(to right, rgba(255,143,143,1) 0%, rgba(255,0,0,1) 50%);
-    color: white;
-    font-size: 0.9em;
-    cursor: pointer;
-    box-shadow: 0 4px 15px #4b4b4b7f;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-radius: 3px;
-    margin-right: 20px;
+.selected {
+    border: 3px solid #ffc800d9 !important;
+    transform: scale(1.1);
 }
 
-.btnPrevious:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px #ff0000;
+/* Ici je gère la section de choix de la date de sortie de la série */
+#dateSortie{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }
 
-.btnStar {
-    padding: 5px 10px;
-    border: 2px solid #FFC800;
+/* Ici c'est le bouton qui gère les choix de durée et de date de sortie */
+.btn-choix {
     background-image: linear-gradient(to right, #4b4b4b 0%, rgb(17, 17, 17) 100%);
-    color: white;
-    font-size: 0.9em;
-    cursor: pointer;
-    box-shadow: 0 4px 15px #4b4b4b7f;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-radius: 3px;
-    margin: 10px 12px;
-}
-
-.btnStar:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px #4b4b4b7f;
-}
-
-.btn-annee {
-    background-image: linear-gradient(to right, #4b4b4b 0%, rgb(17, 17, 17) 100%);
-    margin: 10px;
-    --c: #FFC800; /* the border color */
+    --c: #ffc800ee; /* the border color */
     --b: 5px;    /* the border thickness*/
     --g: 5px;     /* the gap on hover */
     
@@ -124,14 +116,62 @@ h1 {
     transition: .3s, background-position .3s .3s;
     color: white;
     border: none;
+    margin: 15px;
+    width: 200px;
 }
 
-.btn-annee:hover {
+.btn-choix:hover {
     --_i: 100%;
     transition: .3s, background-size .3s .3s;
     color: black;
 }
 
+/* Ici je gère la section du choix de note critque des séries  */
+#pressScore{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.btnStar {
+    background-image: linear-gradient(to right, #4b4b4b 0%, rgb(17, 17, 17) 100%);
+    --c: #ffc800ee; /* the border color */
+    --b: 5px;    /* the border thickness*/
+    --g: 5px;     /* the gap on hover */
+    
+    padding: calc(var(--g) + var(--b));
+    --_g: #FFC800 25%,var(--c) 0;
+    background: 
+      conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
+       var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
+
+      conic-gradient(            at bottom var(--b) left  var(--b),var(--_g))
+       0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat #252525; 
+    transition: .3s, background-position .3s .3s;
+    color: #ffc800ee;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 200px;
+    margin: 15px
+}
+
+.btnStar:hover {
+    --_i: 100%;
+    transition: .3s, background-size .3s .3s;
+    color: black;
+}
+
+
+#noIllu {
+    width: 30%;
+}
+
+.genre-image {
+    border-radius: 5%;
+}
 
 /* ------ Division serie aléatoire ------ */
 
